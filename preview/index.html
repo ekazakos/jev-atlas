@@ -253,8 +253,8 @@ tr:target > td:first-child { box-shadow: inset 3px 0 0 var(--violet); }
 @media (max-width: 600px) { .stats { grid-template-columns: repeat(2, minmax(0,1fr)); } .stats a:nth-child(3) { border-left: none; padding-left: 0; } .stats a:nth-child(n+3) { border-top: 1px solid var(--rule); } }
 .findings { margin: 18px 0 0; display: flex; flex-direction: column; gap: 6px; max-width: 640px; }
 .findings .lab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
-.findings a { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); border: none; display: flex; gap: 10px; align-items: baseline; }
-.findings a b { font-weight: 500; background: var(--gradient-ink); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; min-width: 5.2em; }
+.findings a { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); border: none; display: grid; grid-template-columns: 4.6em minmax(0,1fr) auto; gap: 12px; align-items: baseline; }
+.findings a b { font-weight: 500; text-align: right; background: var(--gradient-ink); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; min-width: 5.2em; }
 .findings a span { color: var(--ink-faint); }
 .findings a:hover { color: var(--violet); }
 
@@ -282,7 +282,7 @@ figure.fig { margin: 26px 0 14px; }
 /* Fig. 1 size ladder */
 .ladder { list-style: none; margin: 0; padding: 0; }
 .lgroup { font-family: var(--font-serif); font-weight: 600; font-size: 17px; margin: 22px 0 6px; }
-.lrow { display: grid; grid-template-columns: 210px minmax(0,1fr) 118px 92px; grid-template-areas: "name track sizes inputs" ". desc desc desc"; column-gap: 16px; row-gap: 2px; padding: 10px 8px; border-radius: 8px; align-items: center; }
+.lrow { display: grid; grid-template-columns: 210px minmax(0,1fr) 136px 92px; grid-template-areas: "name track sizes inputs" ". desc desc desc"; column-gap: 16px; row-gap: 2px; padding: 10px 8px; border-radius: 8px; align-items: center; }
 .lrow:hover, .lrow:focus-within { background: var(--chip-bg); }
 .lrow .lname { grid-area: name; font-weight: 600; font-size: 14.5px; color: var(--ink); border: none; min-width: 0; }
 .lrow .lname:hover { color: var(--violet); }
@@ -290,7 +290,7 @@ figure.fig { margin: 26px 0 14px; }
 .lrow .lsizes { grid-area: sizes; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink); font-variant-numeric: tabular-nums; }
 .lrow .linputs { grid-area: inputs; display: flex; gap: 3px; flex-wrap: wrap; align-items: center; }
 .lrow .ldesc { grid-area: desc; margin: 0; font-size: 13.5px; color: var(--ink-muted); }
-.lhdr { display: grid; grid-template-columns: 210px minmax(0,1fr) 118px 92px; column-gap: 16px; padding: 0 8px; align-items: end; }
+.lhdr { display: grid; grid-template-columns: 210px minmax(0,1fr) 136px 92px; column-gap: 16px; padding: 0 8px; align-items: end; }
 .lhdr .h { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
 .track { position: relative; height: 26px; }
 .track::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--rule); }
@@ -316,7 +316,7 @@ figure.fig { margin: 26px 0 14px; }
 @media screen and (max-width: 819px) {
   .lhdr { grid-template-columns: minmax(0,1fr); }
   .lhdr .h { display: none; }
-  .lrow { grid-template-columns: minmax(0,1fr) auto auto; grid-template-areas: "name sizes inputs" "track track track" "desc desc desc"; row-gap: 4px; }
+  .lrow { grid-template-columns: minmax(0,1fr) auto; grid-template-areas: "name name" "sizes inputs" "track track" "desc desc"; row-gap: 4px; }
   .lrow .track { margin: 8px 0 2px; }
 }
 
@@ -328,16 +328,17 @@ table.t1 { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width:
 .t1 tr:last-child td { border-bottom: none; }
 .t1 td.jev { background: var(--chip-bg); }
 .t1 .nm { font-weight: 600; }
-.t1 .sc { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.t1 .sc { display: block; margin-top: 2px; font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
 .t1 .mu { color: var(--ink-muted); }
 .fnotes { font-size: 12.5px; color: var(--ink-muted); display: flex; flex-direction: column; gap: 2px; margin: 4px 0 24px; }
 
+@media screen and (min-width: 821px) { .shots > .shot:last-child:nth-child(odd) { grid-column: 1 / -1; flex-direction: row; } .shots > .shot:last-child:nth-child(odd) .img { width: 58%; flex: none; height: auto; max-height: 340px; border-bottom: none; border-right: 1px solid var(--rule); } .shots > .shot:last-child:nth-child(odd) figcaption { justify-content: center; } }
 /* Fig. 2 encoding strip */
 .strip { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: flex-end; }
 .run { display: flex; flex-direction: column; gap: 6px; }
 .run .rl { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); letter-spacing: .04em; }
 .run .sq { display: flex; gap: 5px; }
-.sq a { width: 18px; height: 18px; border-radius: 4px; display: block; border: none; background: var(--ink-faint); opacity: .55; transition: transform .15s; }
+.sq a { width: 20px; height: 20px; border-radius: 4px; display: block; border: none; background: var(--ink-faint); opacity: .55; transition: transform .15s; }
 .sq a.shared { background: linear-gradient(135deg, var(--violet) 50%, transparent 50%); opacity: 1; box-shadow: inset 0 0 0 1.5px var(--violet); }
 .sq a.sep { background: transparent; opacity: 1; box-shadow: inset 0 0 0 2px var(--violet); }
 .sq a.nonex::after { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--good); margin: 6px auto 0; }
@@ -360,6 +361,8 @@ table.t1 { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width:
 /* Fig. 3 evidence */
 h3.evg { grid-column: 1 / -1; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); margin: 18px 0 -2px; }
 h3.evg:first-child { margin-top: 0; }
+.ev .big small { line-height: 1.35; font-size: 10px; letter-spacing: .05em; }
+.evidence { align-items: start; }
 .ev .big.word { background: none; -webkit-text-fill-color: var(--ink); color: var(--ink); }
 .ev .big.long { font-size: 23px; }
 .ev { scroll-margin-top: calc(var(--sticky-top) + 16px); }
@@ -390,6 +393,8 @@ h3.evg:first-child { margin-top: 0; }
 .st { display: inline-flex; font-family: var(--font-mono); font-size: 10.5px; padding: 1px 7px; border-radius: 5px; margin-right: 6px; }
 .st.ok { background: var(--good-bg); color: var(--good); } .st.warn { background: var(--warn-bg); color: var(--warn); } .st.neu { background: var(--chip-bg); color: var(--ink-muted); }
 .kind { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-faint); }
+.mini .meta .xref { margin-left: 4px; }
+@media screen and (min-width: 1000px) { .compact.c3 { grid-template-columns: repeat(3, minmax(0,1fr)); } }
 .mini .meta { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 2px; }
 
 /* Fig. 4 schematic (private) */
@@ -441,9 +446,9 @@ footer.site a { color: var(--ink-muted); border: none; }
       <div class="meta-line">Compiled 15–16 Oct 2026 · Vangelis Kazakos</div>
       <div class="findings">
         <span class="lab">Key findings, as reported</span>
-        <a href="#ev-joint"><b>+18.1</b>joint beats separate encoding, MMLU points <span>· MetaEncoder</span></a>
-        <a href="#ev-backbone"><b>+6.0</b>LoRA on the backbone beats training the head, Capability <span>· Inner Jev</span></a>
-        <a href="#ev-softiou"><b>+4.6</b>soft-IoU loss for grounding, mIoU, short clips <span>· VideoJev</span></a>
+        <a href="#ev-joint"><b>+18.1</b>joint beats separate encoding · MMLU<span>MetaEncoder</span></a>
+        <a href="#ev-backbone"><b>+6.0</b>LoRA beats training the head · Capability<span>Inner Jev</span></a>
+        <a href="#ev-softiou"><b>+4.6</b>soft-IoU loss for grounding · mIoU<span>VideoJev</span></a>
       </div>
     </div>
     <aside class="typecard" aria-label="What a Jev call looks like">
@@ -504,7 +509,7 @@ footer.site a { color: var(--ink-muted); border: none; }
     </div>
 
     <h3 class="sub">More text recipes and studies</h3>
-    <div class="compact">
+    <div class="compact c3">
       <div class="mini" id="p-llm-as-jev"><a class="t" href="https://arxiv.org/abs/2610.02076">LLM-as-Jev</a><p>Numbered options read through a prefix-free trie (unbounded K); KL anchors stop generation from degrading. Paper only.</p></div>
       <div class="mini" id="p-anyjev"><a class="t" href="https://arxiv.org/abs/2610.00831">AnyJev</a><p>Training-free readout from any LLM; averaging over option rotations cuts answer flips from 0.230 to 0.073. <a href="https://github.com/nokia-applied-research/AnyJev">Code</a> <a class="xref" href="#ev-order">→ evidence</a></p></div>
       <div class="mini" id="p-fundm"><a class="t" href="https://arxiv.org/abs/2610.17175">FunDM</a><p>Label-free decision head on a frozen LLM, distilled from the full model; 75.0 vs 75.7 using 24 of 36 layers. <a href="https://github.com/Ujjawal-K-Panchal/FunDM">Code</a></p></div>
@@ -544,7 +549,7 @@ footer.site a { color: var(--ink-muted); border: none; }
         <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.00381">arXiv</a><a class="chip" href="https://github.com/lytang63/OmniMed-Jev">Code</a></div></div></article>
     </div>
     <h3 class="sub">Applications</h3>
-    <div class="compact">
+    <div class="compact c3">
       <div class="mini" id="p-pixeljev"><a class="t" href="https://arxiv.org/abs/2609.29283">PixelJev</a><p>Small VLMs (2B, 4B) making Jev-style choices on images; object and action selection left as future work. Paper only.</p></div>
       <div class="mini" id="p-navjev"><a class="t" href="https://arxiv.org/abs/2609.34969">NavJev</a><p>Vision-language navigation with compressed visual candidate actions; R2R-CE 27.0 SR at 0.65 s per step.</p></div>
       <div class="mini" id="p-jev-mobile"><a class="t" href="https://arxiv.org/abs/2609.30186">Jev-Mobile</a><p>The closed Jev API picks phone-UI actions; a VLM plans only occasionally. −73% cost.</p></div>
@@ -569,7 +574,7 @@ footer.site a { color: var(--ink-muted); border: none; }
       <li class="lrow" id="m-liquid"><a class="lname" href="https://huggingface.co/LiquidAI/d1-omni-600M">LiquidAI d1-omni-600M, d1-3B</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg image" style="left:48.07%;width:18.90%"></span><span class="mk image" style="left:48.07%"><em class="">omni-600M</em></span><span class="mk image" style="left:66.97%"><em class="">3B</em></span></div><span class="lsizes">0.6B / 3B</span><span class="linputs"><span class="in I" title="image">I</span><span class="in A" title="audio / speech">A</span><span class="inote">A: 600M only</span></span><p class="ldesc">0.6B: text, image, speech, no video. d1-3B: text and images.</p></li>
       <li class="lrow" id="m-decider-vision"><a class="lname" href="https://huggingface.co/Mapika/decider-2b-vision">Decider 2B vision</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk image" style="left:62.21%"></span></div><span class="lsizes">2B</span><span class="linputs"><span class="in word">vision</span></span><p class="ldesc">Letter readout with option-count temperature calibration. <a class="xref" href="#a-decider">audit ↗</a></p></li>
       <li class="lrow" id="m-h2o"><a class="lname" href="https://huggingface.co/h2oai/h2o-lightning-4b">h2o-lightning-4b</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk image" style="left:70.35%"></span></div><span class="lsizes">4B</span><span class="linputs"><span class="in I" title="image">I</span></span><p class="ldesc">4B, text and image; #1 open-weight on JevBench 7–15 Oct (72.5), per its model card<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>. The live board has since moved (Quyet-1.0-Large leads; see leaderboards).</p></li>
-      <li class="lrow" id="m-clef"><a class="lname" href="https://huggingface.co/Cloudflare/clef-omni">Cloudflare clef / clef-flash / clef-omni</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg mix" style="left:79.87%;width:15.95%"></span><span class="mk unk" style="left:79.87%"><em class="">flash</em></span><span class="mk unk" style="left:92.77%"><em class="">clef</em></span><span class="mk video" style="left:95.81%"><em class="lo">omni</em></span></div><span class="lsizes">9B / 27B / 35B</span><span class="linputs"><span class="in q" title="modality not stated">?</span><span class="in I" title="image">I</span><span class="in V" title="video">V</span><span class="in A" title="audio / speech">A</span><span class="inote">I V A: omni</span></span><p class="ldesc">27B / 9B / 35B. clef-omni reads text, image, audio and video; a joint schema head scores all options of all questions. No training code. <a class="xref" href="#a-clef">audit ↗</a></p></li>
+      <li class="lrow" id="m-clef"><a class="lname" href="https://huggingface.co/Cloudflare/clef-omni">Cloudflare clef · flash · omni</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg mix" style="left:79.87%;width:15.95%"></span><span class="mk unk" style="left:79.87%"><em class="">flash</em></span><span class="mk unk" style="left:92.77%"><em class="">clef</em></span><span class="mk video" style="left:95.81%"><em class="lo">omni</em></span></div><span class="lsizes">9B / 27B / 35B</span><span class="linputs"><span class="in q" title="modality not stated">?</span><span class="in I" title="image">I</span><span class="in V" title="video">V</span><span class="in A" title="audio / speech">A</span><span class="inote">I V A: omni</span></span><p class="ldesc">27B / 9B / 35B. clef-omni reads text, image, audio and video; a joint schema head scores all options of all questions. No training code. <a class="xref" href="#a-clef">audit ↗</a></p></li>
       <li class="lrow" id="m-autotrust"><a class="lname" href="https://huggingface.co/autotrust/JEV-27B-VL">autotrust JEV-27B-VL</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk image" style="left:92.77%"></span></div><span class="lsizes">27B</span><span class="linputs"><span class="in I" title="image">I</span></span><p class="ldesc">27B, image; distilled from Jev outputs.</p></li>
         <li class="lgroup">Text-only, smallest to largest</li>
       <li class="lrow" id="m-bekko"><a class="lname" href="https://github.com/hotchpotch/bekko-system-one">bekko-system-one</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg " style="left:6.23%;width:37.08%"></span><span class="mk " style="left:6.23%"><em class="">17M</em></span><span class="mk " style="left:22.51%"><em class="">68M</em></span><span class="mk " style="left:43.31%"><em class="">400M</em></span></div><span class="lsizes">17M / 68M / 400M</span><span class="linputs"></span><p class="ldesc">Sentence-Transformers based, runs in the browser; second on S1MB behind Jev in the board's 30 Sep snapshot<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>. <a class="xref" href="#a-bekko">audit ↗</a></p></li>
@@ -597,7 +602,7 @@ footer.site a { color: var(--ink-muted); border: none; }
     <h2><span class="n"></span>Benchmarks and leaderboards</h2>
     <p class="headline">Five boards, five definitions of good.</p>
     <p class="intro">Where decision models are ranked. Screenshots taken on 16 October 2026, except jev-bench, which shows the board's own chart; click an image for the live board.</p>
-    <figure class="fig" style="margin-bottom:0">
+    <figure class="fig" style="margin-bottom:30px">
       <div class="t1wrap" role="region" aria-label="Boards at a glance" tabindex="0">
       <table class="t1">
         <thead><tr><th>Board</th><th>Version · size</th><th>Measures</th><th>Leader, as stated</th><th>Jev, as stated</th></tr></thead>
@@ -714,10 +719,10 @@ footer.site a { color: var(--ink-muted); border: none; }
       <h3 class="evg">B · What to train · 3</h3>
       <div class="ev" id="ev-backbone"><div class="big ">+6.0<small>Capability, OpenDecisions</small></div><div><h4>The backbone matters more than the head</h4><p>Gemma 4 31B. Training only the head: 78.9. LoRA with the head frozen: 84.9. LoRA ranks 16–128 score about the same.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">Capability</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con" style="left:78.90%;width:6.00%"></span><span class="p b" style="left:78.90%"><em class="">78.9</em></span><span class="p a" style="left:84.90%"><em class="lo">84.9</em></span></div></div></div><div class="dbleg">○ head only · ● LoRA, head frozen</div><a class="src" href="https://arxiv.org/abs/2610.17205">Releasing the Inner Jev, §5.4</a></div></div>
       <div class="ev" id="ev-softiou"><div class="big ">+4.6<small>mIoU</small></div><div><h4>Soft-IoU for grounding</h4><p>Adding a duration-weighted soft-IoU loss to per-timestep BCE: 60.7 → 65.3 mIoU, short clips.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">mIoU</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con" style="left:60.70%;width:4.60%"></span><span class="p b" style="left:60.70%"><em class="">60.7</em></span><span class="p a" style="left:65.30%"><em class="lo">65.3</em></span></div></div></div><div class="dbleg">○ BCE · ● BCE + soft-IoU · short clips</div><a class="src" href="https://arxiv.org/abs/2610.18615">VideoJev, Table 6</a></div></div>
-      <div class="ev" id="ev-negatives"><div class="big ">69.2<small>top-1 %, staged</small></div><div><h4>Staged hard negatives and replay</h4><p>Pre-train then hard negatives 69.2, vs 52.1 without and 62.4 with hard negatives from the start. Replay keeps 68.5 vs 56.2.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">staging</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con readme" style="left:52.10%;width:17.10%"></span><span class="p b" style="left:52.10%"><em class="">52.1</em></span><span class="p m" style="left:62.40%"><em class="lo">62.4</em></span><span class="p a" style="left:69.20%"><em class="">69.2</em></span></div></div><div class="dbrow"><span class="ml">replay</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con readme" style="left:56.20%;width:12.30%"></span><span class="p b" style="left:56.20%"><em class="">56.2</em></span><span class="p a" style="left:68.50%"><em class="lo">68.5</em></span></div></div></div><div class="dbleg">staging: ○ none · ◌ from start · ● staged — replay: ○ without · ● with</div><a class="src" href="https://github.com/Contrastive-LM/CLM">CLM README</a><span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></div></div>
+      <div class="ev" id="ev-negatives"><div class="big ">69.2<small>top-1 %, staged</small></div><div><h4>Staged hard negatives and replay</h4><p>Pre-train then hard negatives 69.2, vs 52.1 without and 62.4 with hard negatives from the start. Replay keeps 68.5 vs 56.2.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">staging</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con readme" style="left:52.10%;width:17.10%"></span><span class="p b" style="left:52.10%"><em class="">52.1</em></span><span class="p m" style="left:62.40%"><em class="lo">62.4</em></span><span class="p a" style="left:69.20%"><em class="">69.2</em></span></div></div><div class="dbrow"><span class="ml">replay</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con readme" style="left:56.20%;width:12.30%"></span><span class="p b" style="left:56.20%"><em class="">56.2</em></span><span class="p a" style="left:68.50%"><em class="lo">68.5</em></span></div></div></div><div class="dbleg">staging: ○ none · ◎ from start · ● staged — replay: ○ without · ● with</div><a class="src" href="https://github.com/Contrastive-LM/CLM">CLM README</a><span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></div></div>
       <h3 class="evg">C · Head and readout · 3</h3>
       <div class="ev" id="ev-none"><div class="big word">= 0<small>accuracy cost</small></div><div><h4>An explicit "none" is free</h4><p>Adding a "None of the above" option left accuracy unchanged (84.66 both ways, 51,506 questions).</p><a class="src" href="https://arxiv.org/abs/2610.17309">StartLux-Decision</a></div></div>
-      <div class="ev" id="ev-order"><div class="big long">0.230→0.073<small>flip rate</small></div><div><h4>Letter readouts are order-sensitive</h4><p>Averaging over option rotations cuts answer flips under reordering from 0.230 to 0.073; ECE 0.240 → 0.184.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">flip rate</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">0.30</span><span class="con readme" style="left:24.33%;width:52.33%"></span><span class="p b" style="left:76.67%"><em class="">0.230</em></span><span class="p a" style="left:24.33%"><em class="lo">0.073</em></span></div></div><div class="dbrow"><span class="ml">ECE</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">0.30</span><span class="con readme" style="left:61.33%;width:18.67%"></span><span class="p b" style="left:80.00%"><em class="">0.240</em></span><span class="p a" style="left:61.33%"><em class="lo">0.184</em></span></div></div></div><div class="dbleg">○ single order · ● rotation-averaged · lower is better · axis 0–0.30 (truncated), two metrics, not comparable</div><a class="src" href="https://github.com/nokia-applied-research/AnyJev">AnyJev README</a><span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></div></div>
+      <div class="ev" id="ev-order"><div class="big ">0.073<small>flip rate, from 0.230</small></div><div><h4>Letter readouts are order-sensitive</h4><p>Averaging over option rotations cuts answer flips under reordering from 0.230 to 0.073; ECE 0.240 → 0.184.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">flip rate</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">0.30</span><span class="con readme" style="left:24.33%;width:52.33%"></span><span class="p b" style="left:76.67%"><em class="">0.230</em></span><span class="p a" style="left:24.33%"><em class="lo">0.073</em></span></div></div><div class="dbrow"><span class="ml">ECE</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">0.30</span><span class="con readme" style="left:61.33%;width:18.67%"></span><span class="p b" style="left:80.00%"><em class="">0.240</em></span><span class="p a" style="left:61.33%"><em class="lo">0.184</em></span></div></div></div><div class="dbleg">○ single order · ● rotation-averaged · lower is better · axis 0–0.30 (truncated), two metrics, not comparable</div><a class="src" href="https://github.com/nokia-applied-research/AnyJev">AnyJev README</a><span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></div></div>
       <div class="ev" id="ev-head"><div class="big word">null<small>head details</small></div><div><h4>Head tweaks mostly do nothing</h4><p>Kev's notes list option isolation, head width and permutation-KL as tried without help. <a href='https://arxiv.org/abs/2609.25845'>Visual Jev</a>'s typed head tied the LM head (0.761).</p><a class="src" href="https://github.com/jaredpalmer/kev">Kev PLAN.md</a><span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></div></div>
     </div>
     <div class="figcap" style="margin-top:18px"><span class="fn">FIG. 3</span><span class="claim">Each plot is one reported comparison on its own metric and its own axis from zero; compare within a card, never across. Point estimates as reported, no intervals drawn. +18.1 and +4.6 are computed from the two values shown; every other big number is quoted from the source.</span><span class="src">Source: the paper table or README linked on each card</span></div>
