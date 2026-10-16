@@ -333,27 +333,23 @@ table.t1 { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width:
 .fnotes { font-size: 12.5px; color: var(--ink-muted); display: flex; flex-direction: column; gap: 2px; margin: 4px 0 24px; }
 
 @media screen and (min-width: 821px) { .shots > .shot:last-child:nth-child(odd) { grid-column: 1 / -1; flex-direction: row; } .shots > .shot:last-child:nth-child(odd) .img { width: 58%; flex: none; height: auto; max-height: 340px; border-bottom: none; border-right: 1px solid var(--rule); } .shots > .shot:last-child:nth-child(odd) figcaption { justify-content: center; } }
-/* Fig. 2 encoding strip */
-.strip { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: flex-end; }
+/* Fig. 2 encoding strip: one flat square per repo, colour = encoding */
+.strip { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: flex-end; }
 .run { display: flex; flex-direction: column; gap: 6px; }
-.run .rl { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); letter-spacing: .04em; }
-.run .sq { display: flex; gap: 5px; }
-.sq a { width: 20px; height: 20px; border-radius: 4px; display: block; border: none; background: var(--ink-faint); opacity: .55; transition: transform .15s; }
-.sq a.shared { background: linear-gradient(135deg, var(--violet) 50%, transparent 50%); opacity: 1; box-shadow: inset 0 0 0 1.5px var(--violet); }
-.sq a.sep { background: transparent; opacity: 1; box-shadow: inset 0 0 0 2px var(--violet); }
-.sq a.nonex::after { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--good); margin: 6px auto 0; }
-.sq a.sep.nonex::after, .sq a.shared.nonex::after { margin-top: 6px; }
-.sq a:hover, .sq a:focus-visible { transform: scale(1.18); opacity: 1; }
-.enckey { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0 0; font-size: 13px; color: var(--ink-muted); }
+.run .rl { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-faint); letter-spacing: .04em; }
+.run .sq { display: flex; gap: 4px; }
+.sq a { width: 16px; height: 16px; border-radius: 3px; display: block; border: none; background: var(--axis); }
+.sq a.shared { background: color-mix(in srgb, var(--violet) 45%, var(--bg-elev)); }
+.sq a.sep { background: var(--violet); }
+.sq a:hover, .sq a:focus-visible { outline: 2px solid var(--fuchsia); outline-offset: 1px; }
+.enckey { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 14px 0 0; font-size: 13px; color: var(--ink-muted); }
 .enckey .k { display: inline-flex; gap: 7px; align-items: center; }
-.enckey .k i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; background: var(--ink-faint); opacity: .55; }
-.enckey .k i.shared { background: linear-gradient(135deg, var(--violet) 50%, transparent 50%); opacity: 1; box-shadow: inset 0 0 0 1.5px var(--violet); }
-.enckey .k i.sep { background: transparent; opacity: 1; box-shadow: inset 0 0 0 2px var(--violet); }
-.enckey .k i.nonex { background: transparent; opacity: 1; }
-.enckey .k i.nonex::after { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--good); margin: 3.5px auto 0; }
+.enckey .k i { width: 11px; height: 11px; border-radius: 2px; display: inline-block; background: var(--axis); }
+.enckey .k i.shared { background: color-mix(in srgb, var(--violet) 45%, var(--bg-elev)); }
+.enckey .k i.sep { background: var(--violet); }
 .enckey b { font-family: var(--font-mono); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
-.tag.shared { background: linear-gradient(135deg, var(--chip-bg) 50%, transparent 50%); color: var(--violet); box-shadow: inset 0 0 0 1px var(--violet); }
-.tag.sep { background: transparent; color: var(--violet); box-shadow: inset 0 0 0 1.5px var(--violet); }
+.tag.shared { color: var(--violet); }
+.tag.sep { background: var(--violet); color: var(--on-accent); }
 .tag.no { background: transparent; color: var(--ink-faint); padding: 0; }
 .tag.other { background: transparent; color: var(--ink-muted); padding: 0; }
 .audit tr.group td .cnt { color: var(--ink-faint); margin-left: 6px; }
@@ -641,7 +637,7 @@ footer.site a { color: var(--ink-muted); border: none; }
 
   <section class="block" id="hubs">
     <h2><span class="n"></span>Where to browse</h2>
-    <p class="headline">Unranked collections; scores there are self-reported.</p>
+    <p class="headline">Unranked collections of models and papers.</p>
     <p class="intro">Places that collect decision models and papers without ranking them.</p>
     <div class="boards">
       <div class="board" id="h-hf"><div class="top"><a class="name" href="https://huggingface.co/models?other=decision-model">The decision-model shelf</a><span class="stat">1,981 models</span></div><p><span class="src-tag">Hugging Face tag</span> Every model its authors tagged as a decision model.</p></div>
@@ -656,14 +652,13 @@ footer.site a { color: var(--ink-muted); border: none; }
     <p class="headline">22 of 27 audited repos encode request and options jointly.</p>
     <p class="intro">We read the code of 27 implementations, all scored the same way. The first question for any design: are the request and the options encoded together in one sequence (joint), or separately (cacheable options)? Stars as of 15 Oct 2026.</p>
     <figure class="fig" style="margin-top:20px">
-      <div class="strip"><div class="run" role="group" aria-label="Text, decision heads on LLM backbones"><span class="rl">LLM heads · 5</span><span class="sq"><a class="sep nonex" href="#a-jeva" title="Jeva · separate · none: gate" aria-label="Jeva, separate, none: gate"></a><a class="" href="#a-kev" title="Kev · joint · none: no" aria-label="Kev, joint, none: no"></a><a class="" href="#a-nanojev" title="NanoJev · joint · none: no" aria-label="NanoJev, joint, none: no"></a><a class="" href="#a-decider" title="Decider · joint · none: no" aria-label="Decider, joint, none: no"></a><a class="" href="#a-agentjev" title="AgentJev · joint · none: no" aria-label="AgentJev, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Text, encoder models"><span class="rl">encoders · 7</span><span class="sq"><a class="" href="#a-laya" title="Laya · joint · none: untrained" aria-label="Laya, joint, none: untrained"></a><a class="" href="#a-gliner" title="GLiNER2.5-Decide · joint · none: threshold" aria-label="GLiNER2.5-Decide, joint, none: threshold"></a><a class="" href="#a-von" title="Von · joint · none: no" aria-label="Von, joint, none: no"></a><a class="shared" href="#a-bekko" title="Bekko · shared prefix · none: no" aria-label="Bekko, shared prefix, none: no"></a><a class="nonex" href="#a-chinese-jev" title="Chinese-Jev · joint · none: act head" aria-label="Chinese-Jev, joint, none: act head"></a><a class="sep nonex" href="#a-verdict" title="Verdict · separate · none: conformal" aria-label="Verdict, separate, none: conformal"></a><a class="" href="#a-bongard" title="Bongard · joint · none: no" aria-label="Bongard, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Text, recipes and two-tower models"><span class="rl">recipes · 9</span><span class="sq"><a class="sep" href="#a-clm" title="CLM · separate · none: no" aria-label="CLM, separate, none: no"></a><a class="" href="#a-semif" title="SemIf · joint · none: no" aria-label="SemIf, joint, none: no"></a><a class="" href="#a-anyjev" title="AnyJev · joint · none: no" aria-label="AnyJev, joint, none: no"></a><a class="" href="#a-open-jev" title="Open-Jev · joint · none: no" aria-label="Open-Jev, joint, none: no"></a><a class="nonex" href="#a-startlux" title="StartLux · joint · none: option" aria-label="StartLux, joint, none: option"></a><a class="" href="#a-tev1" title="Tev1 · joint · none: no" aria-label="Tev1, joint, none: no"></a><a class="" href="#a-jevk5" title="JevK5 · joint · none: no" aria-label="JevK5, joint, none: no"></a><a class="" href="#a-fundm" title="FunDM · joint · none: no" aria-label="FunDM, joint, none: no"></a><a class="" href="#a-sii" title="SII-Decision · joint · none: no" aria-label="SII-Decision, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Vision and video"><span class="rl">vision/video · 6</span><span class="sq"><a class="" href="#a-videojev" title="VideoJev · joint · none: no" aria-label="VideoJev, joint, none: no"></a><a class="shared nonex" href="#a-omnijev" title="OmniJev · shared prefix · none: abstain" aria-label="OmniJev, shared prefix, none: abstain"></a><a class="" href="#a-omnimed" title="OmniMed-Jev · joint · none: no" aria-label="OmniMed-Jev, joint, none: no"></a><a class="" href="#a-clef" title="Clef · joint · none: no" aria-label="Clef, joint, none: no"></a><a class="" href="#a-visual-jev" title="Visual Jev · joint · none: experimental" aria-label="Visual Jev, joint, none: experimental"></a><a class="" href="#a-vllm-sr-d3" title="vllm-sr d3 · joint · none: no" aria-label="vllm-sr d3, joint, none: no"></a></span></div></div>
+      <div class="strip"><div class="run" role="group" aria-label="Text, decision heads on LLM backbones"><span class="rl">LLM heads · 5</span><span class="sq"><a class="sep" href="#a-jeva" title="Jeva · separate · none: gate" aria-label="Jeva, separate, none: gate"></a><a class="" href="#a-kev" title="Kev · joint · none: no" aria-label="Kev, joint, none: no"></a><a class="" href="#a-nanojev" title="NanoJev · joint · none: no" aria-label="NanoJev, joint, none: no"></a><a class="" href="#a-decider" title="Decider · joint · none: no" aria-label="Decider, joint, none: no"></a><a class="" href="#a-agentjev" title="AgentJev · joint · none: no" aria-label="AgentJev, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Text, encoder models"><span class="rl">encoders · 7</span><span class="sq"><a class="" href="#a-laya" title="Laya · joint · none: untrained" aria-label="Laya, joint, none: untrained"></a><a class="" href="#a-gliner" title="GLiNER2.5-Decide · joint · none: threshold" aria-label="GLiNER2.5-Decide, joint, none: threshold"></a><a class="" href="#a-von" title="Von · joint · none: no" aria-label="Von, joint, none: no"></a><a class="shared" href="#a-bekko" title="Bekko · shared prefix · none: no" aria-label="Bekko, shared prefix, none: no"></a><a class="" href="#a-chinese-jev" title="Chinese-Jev · joint · none: act head" aria-label="Chinese-Jev, joint, none: act head"></a><a class="sep" href="#a-verdict" title="Verdict · separate · none: conformal" aria-label="Verdict, separate, none: conformal"></a><a class="" href="#a-bongard" title="Bongard · joint · none: no" aria-label="Bongard, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Text, recipes and two-tower models"><span class="rl">recipes · 9</span><span class="sq"><a class="sep" href="#a-clm" title="CLM · separate · none: no" aria-label="CLM, separate, none: no"></a><a class="" href="#a-semif" title="SemIf · joint · none: no" aria-label="SemIf, joint, none: no"></a><a class="" href="#a-anyjev" title="AnyJev · joint · none: no" aria-label="AnyJev, joint, none: no"></a><a class="" href="#a-open-jev" title="Open-Jev · joint · none: no" aria-label="Open-Jev, joint, none: no"></a><a class="" href="#a-startlux" title="StartLux · joint · none: option" aria-label="StartLux, joint, none: option"></a><a class="" href="#a-tev1" title="Tev1 · joint · none: no" aria-label="Tev1, joint, none: no"></a><a class="" href="#a-jevk5" title="JevK5 · joint · none: no" aria-label="JevK5, joint, none: no"></a><a class="" href="#a-fundm" title="FunDM · joint · none: no" aria-label="FunDM, joint, none: no"></a><a class="" href="#a-sii" title="SII-Decision · joint · none: no" aria-label="SII-Decision, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Vision and video"><span class="rl">vision/video · 6</span><span class="sq"><a class="" href="#a-videojev" title="VideoJev · joint · none: no" aria-label="VideoJev, joint, none: no"></a><a class="shared" href="#a-omnijev" title="OmniJev · shared prefix · none: abstain" aria-label="OmniJev, shared prefix, none: abstain"></a><a class="" href="#a-omnimed" title="OmniMed-Jev · joint · none: no" aria-label="OmniMed-Jev, joint, none: no"></a><a class="" href="#a-clef" title="Clef · joint · none: no" aria-label="Clef, joint, none: no"></a><a class="" href="#a-visual-jev" title="Visual Jev · joint · none: experimental" aria-label="Visual Jev, joint, none: experimental"></a><a class="" href="#a-vllm-sr-d3" title="vllm-sr d3 · joint · none: no" aria-label="vllm-sr d3, joint, none: no"></a></span></div></div>
       <div class="enckey">
-        <span class="k"><i></i>joint <b>22</b> · request and options in one sequence</span>
-        <span class="k"><i class="shared"></i>shared prefix <b>2</b> · as labelled in the table</span>
-        <span class="k"><i class="sep"></i>separate <b>3</b> · options encoded without the request, so they can be cached</span>
-        <span class="k"><i class="nonex"></i>explicit "none" <b>5</b> · gate, act head, conformal, option, abstain</span>
+        <span class="k"><i></i>joint <b>22</b></span>
+        <span class="k"><i class="shared"></i>shared prefix <b>2</b></span>
+        <span class="k"><i class="sep"></i>separate <b>3</b></span>
       </div>
-      <figcaption class="figcap"><span class="fn">FIG. 2</span><span class="claim">One square per repo in the table below, in table order (grouped, not ranked); click a square to jump to its row. The audited set, not a census.</span>
+      <figcaption class="figcap"><span class="fn">FIG. 2</span><span class="claim">One square per repo, in table order; click one to jump to its row. Joint: request and options in one sequence. Separate: options encoded without the request, so they can be cached.</span>
         <span class="src">Source: the table below · code read 15–16 Oct 2026</span></figcaption>
     </figure>
     <div class="table-wrap" role="region" aria-label="Code audit table" tabindex="0">
