@@ -314,6 +314,7 @@ footer.site .container { display: flex; justify-content: space-between; flex-wra
       <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.11692">Can Jev be your Q or Policy?</a><p>Jev used as policy, score rater, meta-regulator and transition model inside RL loops.</p></div>
       <div class="mini"><a class="t" href="https://arxiv.org/abs/2609.36965">Chinese-Jev</a><p>Laya-family encoder for Chinese with GRPO-style RLCD and DDP training. <a href="https://github.com/gulucaptain/Chinese-Jev">Code</a></p></div>
       <div class="mini"><a class="t" href="https://arxiv.org/abs/2609.29429">Just Ask Jev</a><p>RLCD-trained decisions used as a zero-shot detector.</p></div>
+      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.11392">TypedBench</a><p>A paper benchmark for typed decisions: calibration, sensitivity to wording, cost.</p></div>
     </div>
   </section>
 
@@ -386,7 +387,7 @@ footer.site .container { display: flex; justify-content: space-between; flex-wra
 
   <section class="block" id="boards">
     <h2>Benchmarks and leaderboards</h2>
-    <p class="intro">Where decision models are ranked. Each image is a snapshot taken on 16 October 2026; click it for the live board.</p>
+    <p class="intro">Where decision models are ranked. Screenshots taken on 16 October 2026, except jev-bench, which shows the board's own chart; click an image for the live board.</p>
     <div class="shots">
       <figure class="shot"><a class="img" href="https://huggingface.co/spaces/multimodalart/jev-decision-index"><img src="boards/decision-index.jpg" alt="Decision Index 0.3.2 bar chart of the top open decision models by full score" loading="lazy" width="1200" height="983"></a>
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/multimodalart/jev-decision-index">Decision Index</a><span class="stat">v0.3.2 · 168 models</span></div>
@@ -397,15 +398,12 @@ footer.site .container { display: flex; justify-content: space-between; flex-wra
       <figure class="shot"><a class="img" href="https://huggingface.co/spaces/hotchpotch/S1MB-leaderboard"><img src="boards/s1mb.jpg" alt="System One Mosaic Benchmark overall leaderboard by Borda score" loading="lazy" width="1200" height="1083"></a>
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/hotchpotch/S1MB-leaderboard">System One Mosaic Benchmark</a><span class="stat">165 models · 137 benchmarks</span></div>
         <p>Text only, ranked by Borda score across Noul, Choice and Score tasks. Superion S1 leads (91.21). <a href="https://huggingface.co/blog/hotchpotch/system-one-mosaic-benchmark">Write-up</a></p></figcaption></figure>
-      <figure class="shot"><a class="img" href="https://huggingface.co/spaces/benchmarkheaven/JevBench"><img src="boards/jevbench.jpg" alt="JevBench header with 92 ranked systems, release v1.6.1" loading="lazy" width="1200" height="688"></a>
-        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/benchmarkheaven/JevBench">JevBench</a><span class="stat">v1.6.1 · 92 ranked</span></div>
-        <p>Intelligence, calibration, speed and cost; the headline capability score counts only models within cost and latency caps. Snapshot of their 5 Oct release; the board's table renders broken, so only its header is shown.</p></figcaption></figure>
-      <figure class="shot"><a class="img" href="https://huggingface.co/datasets/Praveenrajus/jev-bench"><img src="boards/jev-bench.jpg" alt="jev-bench leaderboard table with accuracy, calibration error and Brier score" loading="lazy" width="900" height="1268"></a>
-        <figcaption><div class="top"><a class="name" href="https://huggingface.co/datasets/Praveenrajus/jev-bench">jev-bench</a><span class="stat">46 rows · human labels</span></div>
-        <p>Human-labelled data with label distributions; accuracy with calibration (ECE, Brier). Jev 1.13.0: 0.733 accuracy, ECE 0.113.</p></figcaption></figure>
-      <figure class="shot noimg">
-        <figcaption><div class="top"><a class="name" href="https://arxiv.org/abs/2610.11392">TypedBench</a><span class="stat">paper</span></div>
-        <p>Calibration, sensitivity to wording and cost of typed decisions. A paper benchmark with no live board, so no snapshot.</p></figcaption></figure>
+      <figure class="shot"><a class="img" href="https://benchmarkheaven.com/jev-models"><img src="boards/jevbench.jpg" alt="JevBench capability ranking of open-weight decision models, Quyet-1.0-Large first at 81.7" loading="lazy" width="1200" height="904"></a>
+        <figcaption><div class="top"><a class="name" href="https://benchmarkheaven.com/jev-models">JevBench</a><span class="stat">board v1.7.46 · 162 ranked</span></div>
+        <p>Intelligence, calibration, cost and latency, run independently of TypeSafe. The capability score averages intelligence and calibration over systems within 2× Jev's cost and latency. Quyet-1.0-Large leads (81.7); Jev 1.13.0 scores 77.1 as the reference.</p></figcaption></figure>
+      <figure class="shot"><a class="img" href="https://huggingface.co/datasets/Praveenrajus/jev-bench#leaderboard"><img src="boards/jev-bench.jpg" alt="jev-bench chart of every model: macro accuracy against calibration error, Jev 1.13.0 marked" loading="lazy" width="1200" height="698"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/datasets/Praveenrajus/jev-bench#leaderboard">jev-bench</a><span class="stat">v0.1.1 · 22,773 test records</span></div>
+        <p>Every model on the same human-labelled test set, accuracy against calibration error. Jev 1.13.0: 0.733 accuracy, ECE 0.113; readout-fine-tuned open models beat it on both. Chart from the dataset card (2 Oct).</p></figcaption></figure>
     </div>
   </section>
 
