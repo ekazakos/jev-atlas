@@ -628,8 +628,8 @@ footer.site a { color: var(--ink-muted); border: none; }
 
   <section class="block" id="demos">
     <h2><span class="n"></span>Demos</h2>
-    <p class="headline">Nine demos worth trying.</p>
-    <p class="intro">We found 282 live demos of Jev-style models (all checked on 16 Oct 2026). These nine are the most carefully made and show the most: probabilities, calibration, abstention, latency and the one-pass mechanics. Screenshots 16 Oct; click one to open the demo.</p>
+    <p class="headline">Eleven demos worth trying.</p>
+    <p class="intro">We found 282 live demos of Jev-style models (all checked on 16 Oct 2026). These eleven are the most carefully made and show the most: probabilities, calibration, abstention, latency, the one-pass mechanics, and two robots in simulation. Screenshots 16 Oct; click one to open the demo.</p>
     <div class="demos">
       <figure class="demo" id="d-laya"><a class="img" href="https://huggingface.co/spaces/convaiinnovations/laya-demo"><img src="demos/laya.jpg" alt="Screenshot of the Laya Demo demo" loading="lazy" decoding="async" width="960" height="560"></a>
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/convaiinnovations/laya-demo">Laya Demo</a><span class="lk">♥ 276</span></div><div class="dmeta"><span>Laya · 421M</span><span>text</span><span>convaiinnovations</span></div><p>Support triage, guardrails, routing and more, each answered in one pass with a probability per option; the thresholds live in your code, not in the model.</p></figcaption></figure>
@@ -649,6 +649,13 @@ footer.site a { color: var(--ink-muted); border: none; }
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/LiquidAI/system-one-arcade">System One Arcade</a><span class="lk">♥ 44</span></div><div class="dmeta"><span>d1-3B</span><span>camera · drawing</span><span>LiquidAI · official</span></div><p>Eleven camera and drawing mini-games, each driven by a few typed questions answered in one pass.</p></figcaption></figure>
       <figure class="demo" id="d-videojev"><a class="img" href="https://huggingface.co/spaces/hugging-apps/videojev"><img src="demos/videojev.jpg" alt="Screenshot of the VideoJev demo" loading="lazy" decoding="async" width="960" height="560"></a>
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/hugging-apps/videojev">VideoJev</a><span class="lk">♥ 2</span></div><div class="dmeta"><span>VideoJev-4B</span><span>video</span><span>hugging-apps</span></div><p>Temporal grounding and video QA in one pass, with a probability per timestamp; several questions share one video encoding.</p></figcaption></figure>
+    </div>
+    <h3 class="sub">Embodied, in simulators</h3>
+    <div class="demos">
+      <figure class="demo" id="d-duckkick"><a class="img" href="https://huggingface.co/spaces/thaitea/laya-vision-microduck-kick-demo"><img src="demos/duckkick.jpg" alt="Screenshot of the Laya Vision plays find-and-kick demo" loading="lazy" decoding="async" width="960" height="560"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/thaitea/laya-vision-microduck-kick-demo">Laya Vision plays find-and-kick</a></div><div class="dmeta"><span>Laya Vision</span><span>robot camera · MuJoCo</span><span>thaitea</span></div><p>A simulated Pollen Microduck sees only its own camera; each step the model picks forward, left, right or kick, about 70 ms per decision, on the action space of a published eval.</p></figcaption></figure>
+      <figure class="demo" id="d-runeduck"><a class="img" href="https://huggingface.co/spaces/surogate/rune-duck"><img src="demos/runeduck.jpg" alt="Screenshot of the Rune and the Duck demo" loading="lazy" decoding="async" width="960" height="560"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/surogate/rune-duck">Rune and the Duck</a><span class="lk">♥ 2</span></div><div class="dmeta"><span>Rune 26B-A4B</span><span>robot camera · MuJoCo in browser</span><span>surogate</span></div><p>MuJoCo runs in your browser; the model answers set questions about each camera frame and plain code moves the duck. Shows the simulator's ground truth next to the model's answer.</p></figcaption></figure>
     </div>
     <p class="evnote" style="margin-top:16px">to try closed Jev itself: <a href="https://console.typesafe.ai/playground">TypeSafe playground</a> (account) · <a href="https://openrouter.ai/typesafe/jev-1.13">OpenRouter playground</a> (credits)</p>
   </section>
