@@ -242,7 +242,7 @@ p.headline { font-family: var(--font-serif); font-weight: 500; font-size: clamp(
 .self { display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1.5px dotted var(--ink-muted); margin-left: 4px; vertical-align: .05em; }
 .xref { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); border: none; white-space: nowrap; margin-left: 6px; }
 .xref:hover { color: var(--violet); }
-:is([id^="m-"], [id^="p-"], [id^="b-"], [id^="ev-"], [id^="h-"]):target { box-shadow: inset 2px 0 0 var(--violet), var(--shadow-md); }
+:is([id^="m-"], [id^="p-"], [id^="b-"], [id^="d-"], [id^="ev-"], [id^="h-"]):target { box-shadow: inset 2px 0 0 var(--violet), var(--shadow-md); }
 tr:target > td:first-child { box-shadow: inset 3px 0 0 var(--violet); }
 
 /* hero stat strip + key findings */
@@ -359,6 +359,24 @@ table.t1 { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width:
 .tag.other { background: transparent; color: var(--ink-muted); padding: 0; }
 .audit tr.group td .cnt { color: var(--ink-faint); margin-left: 6px; }
 
+/* demos */
+.demos { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 18px; }
+@media screen and (max-width: 980px) { .demos { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media screen and (max-width: 620px) { .demos { grid-template-columns: 1fr; } }
+.demo { margin: 0; background: var(--bg-elev); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; min-width: 0; transition: box-shadow .2s ease; }
+.demo:hover { box-shadow: var(--shadow-md); }
+.demo .img { display: block; border: none; aspect-ratio: 960 / 560; overflow: hidden; background: #fff; border-bottom: 1px solid var(--rule); }
+.demo .img img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; transition: transform .4s ease; }
+.demo .img:hover img { transform: scale(1.03); }
+.demo figcaption { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 5px; }
+.demo .top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.demo .name { font-family: var(--font-serif); font-weight: 600; font-size: 17px; }
+.demo .lk { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); white-space: nowrap; }
+.demo .dmeta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); }
+.demo .dmeta span + span::before { content: "· "; color: var(--ink-faint); }
+.demo p { margin: 0; font-size: 13.5px; color: var(--ink-muted); }
+@media (prefers-reduced-motion: reduce) { .demo .img:hover img { transform: none; } }
+
 /* Fig. 3 evidence */
 h3.evg { grid-column: 1 / -1; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); margin: 18px 0 -2px; }
 h3.evg:first-child { margin-top: 0; }
@@ -436,7 +454,7 @@ footer.site a { color: var(--ink-muted); border: none; }
 <header class="topbar">
   <div class="container topbar-inner">
     <a class="brand" href="#top"><svg class="mark" viewBox="24 40 464 464" aria-hidden="true"><defs><linearGradient id="markbar" gradientUnits="userSpaceOnUse" x1="256" y1="436" x2="256" y2="76"><stop offset="0" class="g0"/><stop offset="0.55" class="g1"/><stop offset="1" class="g2"/></linearGradient></defs><rect x="48" y="348" width="64" height="88" rx="14"/><rect x="136" y="288" width="64" height="148" rx="14"/><rect x="312" y="316" width="64" height="120" rx="14"/><rect x="400" y="372" width="64" height="64" rx="14"/><rect class="w" x="224" y="76" width="64" height="360" rx="14"/><rect x="36" y="452" width="440" height="8" rx="4"/></svg><span>Jev <i>atlas</i></span></a>
-    <nav class="nav" aria-label="Sections"><a href="#jev">Jev</a><span class="nav-sep" aria-hidden="true"></span><a href="#text">Text</a><a href="#vision">Vision</a><span class="nav-sep" aria-hidden="true"></span><a href="#models">Models</a><a href="#boards">Boards</a><a href="#hubs">Browse</a><span class="nav-sep" aria-hidden="true"></span><a href="#audit">Audit</a><a href="#evidence">Evidence</a><a href="#rl">RL</a></nav>
+    <nav class="nav" aria-label="Sections"><a href="#jev">Jev</a><span class="nav-sep" aria-hidden="true"></span><a href="#text">Text</a><a href="#vision">Vision</a><span class="nav-sep" aria-hidden="true"></span><a href="#models">Models</a><a href="#demos">Demos</a><a href="#boards">Boards</a><a href="#hubs">Browse</a><span class="nav-sep" aria-hidden="true"></span><a href="#audit">Audit</a><a href="#evidence">Evidence</a><a href="#rl">RL</a></nav>
   </div>
 </header>
 
@@ -606,6 +624,33 @@ footer.site a { color: var(--ink-muted); border: none; }
         <span class="keyline"><span><i class="sw" style="background:var(--fuchsia)"></i>video input</span><span><i class="sw" style="background:var(--violet)"></i>image input</span><span><i class="sw" style="background:var(--ink-muted)"></i>text only</span><span><i class="sw" style="background:var(--ink-faint)"></i>modality not stated</span><span class="inote">inputs: I image · V video · A audio/speech · ? not stated · text for all</span></span>
         <span class="src">Source: model cards and repos linked in each row · as of 16 Oct 2026. Paper-released video weights: <a href="#p-videojev">VideoJev-4B</a>.</span></figcaption>
     </figure>
+  </section>
+
+  <section class="block" id="demos">
+    <h2><span class="n"></span>Demos</h2>
+    <p class="headline">Nine demos worth trying.</p>
+    <p class="intro">We found 282 live demos of Jev-style models (all checked on 16 Oct 2026). These nine are the most carefully made and show the most: probabilities, calibration, abstention, latency and the one-pass mechanics. Screenshots 16 Oct; click one to open the demo.</p>
+    <div class="demos">
+      <figure class="demo" id="d-laya"><a class="img" href="https://huggingface.co/spaces/convaiinnovations/laya-demo"><img src="demos/laya.jpg" alt="Screenshot of the Laya Demo demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/convaiinnovations/laya-demo">Laya Demo</a><span class="lk">♥ 276</span></div><div class="dmeta"><span>Laya · 421M</span><span>text</span><span>convaiinnovations</span></div><p>Support triage, guardrails, routing and more, each answered in one pass with a probability per option; the thresholds live in your code, not in the model.</p></figcaption></figure>
+      <figure class="demo" id="d-kev"><a class="img" href="https://huggingface.co/spaces/jaredpalmer/kev"><img src="demos/kev.jpg" alt="Screenshot of the Kev demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/jaredpalmer/kev">Kev</a><span class="lk">♥ 88</span></div><div class="dmeta"><span>Kev · 0.8B / 4B</span><span>text</span><span>Jared Palmer</span></div><p>Jev's /v1/systemone request format with both sizes side by side, plus probes for question isolation and option-boundary forgery.</p></figcaption></figure>
+      <figure class="demo" id="d-openjev"><a class="img" href="https://huggingface.co/spaces/pngwn/open-jev"><img src="demos/openjev.jpg" alt="Screenshot of the Open Jev demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/pngwn/open-jev">Open Jev</a><span class="lk">♥ 40</span></div><div class="dmeta"><span>Qwen3.5-4B scorer</span><span>text</span><span>pngwn</span></div><p>Encode the state once, decide in parallel: cached vs naive scoring vs JSON generation, with forward-pass counts.</p></figcaption></figure>
+      <figure class="demo" id="d-jevweb"><a class="img" href="https://warsang.github.io/jev-web/"><img src="demos/jevweb.jpg" alt="Screenshot of the jev-web demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://warsang.github.io/jev-web/">jev-web</a></div><div class="dmeta"><span>~10 open models</span><span>in browser</span><span>warsang</span></div><p>Switch between open decision models on the same input, on your own device, with latency and forward passes counted.</p></figcaption></figure>
+      <figure class="demo" id="d-jev9b"><a class="img" href="https://huggingface.co/spaces/autotrust/jev-9b-decision-demo"><img src="demos/jev9b.jpg" alt="Screenshot of the JEV-9B · System 1 + 2 demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/autotrust/jev-9b-decision-demo">JEV-9B · System 1 + 2</a><span class="lk">♥ 110</span></div><div class="dmeta"><span>JEV-9B</span><span>text</span><span>AutoTrust</span></div><p>Calibrated distributions in one pass; an Escalate tab hands low-confidence questions to System 2 thinking with the same weights.</p></figcaption></figure>
+      <figure class="demo" id="d-imajev"><a class="img" href="https://huggingface.co/spaces/mohit67890/imajev"><img src="demos/imajev.jpg" alt="Screenshot of the imajev demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/mohit67890/imajev">imajev</a><span class="lk">♥ 14</span></div><div class="dmeta"><span>imajev-4B</span><span>image + text</span><span>mohit67890</span></div><p>Photo-against-record checks with an explicit can't-tell probability, so you can trade coverage for accuracy.</p></figcaption></figure>
+      <figure class="demo" id="d-d3"><a class="img" href="https://huggingface.co/spaces/vllm-sr/Decision-3.0"><img src="demos/d3.jpg" alt="Screenshot of the Decision 3.0 demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/vllm-sr/Decision-3.0">Decision 3.0</a><span class="lk">♥ 3</span></div><div class="dmeta"><span>d3 family</span><span>text · image · video</span><span>vLLM Semantic Router · official</span></div><p>A probability for every answer on text, images and video; models side by side with latency; boxes scored on a zooming grid.</p></figcaption></figure>
+      <figure class="demo" id="d-arcade"><a class="img" href="https://huggingface.co/spaces/LiquidAI/system-one-arcade"><img src="demos/arcade.jpg" alt="Screenshot of the System One Arcade demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/LiquidAI/system-one-arcade">System One Arcade</a><span class="lk">♥ 44</span></div><div class="dmeta"><span>d1-3B</span><span>camera · drawing</span><span>LiquidAI · official</span></div><p>Eleven camera and drawing mini-games, each driven by a few typed questions answered in one pass.</p></figcaption></figure>
+      <figure class="demo" id="d-videojev"><a class="img" href="https://huggingface.co/spaces/hugging-apps/videojev"><img src="demos/videojev.jpg" alt="Screenshot of the VideoJev demo" loading="lazy" decoding="async" width="960" height="645"></a>
+        <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/hugging-apps/videojev">VideoJev</a><span class="lk">♥ 2</span></div><div class="dmeta"><span>VideoJev-4B</span><span>video</span><span>hugging-apps</span></div><p>Temporal grounding and video QA in one pass, with a probability per timestamp; several questions share one video encoding.</p></figcaption></figure>
+    </div>
+    <p class="evnote" style="margin-top:16px">to try closed Jev itself: <a href="https://console.typesafe.ai/playground">TypeSafe playground</a> (account) · <a href="https://openrouter.ai/typesafe/jev-1.13">OpenRouter playground</a> (credits)</p>
   </section>
 
   <section class="block" id="boards">
