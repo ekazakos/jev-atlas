@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Jev Field Guide</title>
-<meta name="description" content="A field guide to Jev-style decision models (October 2026): text and vision papers, open models, leaderboards, a code audit of about 30 implementations, and the evidence on head design.">
+<meta name="description" content="A field guide to Jev-style decision models (October 2026): text and vision papers, open models, leaderboards, a code audit of 27 implementations, and the evidence on head design.">
 <link rel="canonical" href="https://ekazakos.github.io/jev-field-guide/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jev Field Guide">
 <meta property="og:title" content="Jev Field Guide">
-<meta property="og:description" content="Papers, open models, leaderboards and a code audit of about 30 implementations of Jev-style decision models (October 2026).">
+<meta property="og:description" content="Papers, open models, leaderboards and a code audit of 27 implementations of Jev-style decision models (October 2026).">
 <meta property="og:url" content="https://ekazakos.github.io/jev-field-guide/">
 <meta property="og:image" content="https://ekazakos.github.io/jev-field-guide/og.png">
 <meta property="og:image:width" content="1200">
@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="Jev field guide: a decision card showing Billing chosen with probability 0.91">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jev Field Guide">
-<meta name="twitter:description" content="Papers, open models, leaderboards and a code audit of about 30 implementations of Jev-style decision models (October 2026).">
+<meta name="twitter:description" content="Papers, open models, leaderboards and a code audit of 27 implementations of Jev-style decision models (October 2026).">
 <meta name="twitter:image" content="https://ekazakos.github.io/jev-field-guide/og.png">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 
@@ -29,12 +29,14 @@
    paper rows and board cards in the owner's homepage idiom (chips, mono labels, gradient edges). */
 :root {
   --bg: #f5f6fb; --bg-elev: #ffffff;
-  --ink: #141632; --ink-muted: #474a6e; --ink-faint: #8487a6;
+  --ink: #141632; --ink-muted: #474a6e; --ink-faint: #62658a; --axis: #b4b7cf;
   --rule: #e2e4f0; --chip-bg: #eceefa;
   --violet: #4338ca; --fuchsia: #db2777; --cyan: #c2410c;
   --accent: var(--violet); --accent-hover: var(--fuchsia);
   --good: #047857; --good-bg: #e3f6ee; --warn: #9a3412; --warn-bg: #fdeee4;
   --gradient: linear-gradient(95deg, #4f46e5 0%, #ec4899 55%, #f59e0b 100%);
+  --gradient-ink: linear-gradient(95deg, #4338ca 0%, #be185d 55%, #b45309 100%); --on-accent: #ffffff;
+  --topbar-h: 60px; --sticky-top: calc(env(safe-area-inset-top, 0px) + var(--topbar-h));
   --shadow-sm: 0 1px 2px rgba(67,56,202,.06), 0 1px 1px rgba(20,22,50,.03);
   --shadow-md: 0 6px 22px rgba(67,56,202,.11), 0 2px 6px rgba(20,22,50,.04);
   --topbar: rgba(245,246,251,.84);
@@ -45,7 +47,8 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0e1024; --bg-elev: #171a36; --ink: #eef0fb; --ink-muted: #b8bbdc; --ink-faint: #7f83a8;
+    --bg: #0e1024; --bg-elev: #171a36; --ink: #eef0fb; --ink-muted: #b8bbdc; --ink-faint: #8d91b6; --axis: #4a4f80;
+    --gradient-ink: linear-gradient(95deg, #a5b4fc 0%, #f9a8d4 55%, #fcd34d 100%); --on-accent: #0e1024;
     --rule: #2a2e52; --chip-bg: #20244a; --violet: #a5b4fc; --fuchsia: #f9a8d4; --cyan: #fcd34d;
     --good: #6ee7b7; --good-bg: #133227; --warn: #fdba74; --warn-bg: #3a2416;
     --shadow-sm: 0 1px 2px rgba(0,0,0,.3); --shadow-md: 0 8px 26px rgba(0,0,0,.45);
@@ -53,7 +56,8 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0e1024; --bg-elev: #171a36; --ink: #eef0fb; --ink-muted: #b8bbdc; --ink-faint: #7f83a8;
+  --bg: #0e1024; --bg-elev: #171a36; --ink: #eef0fb; --ink-muted: #b8bbdc; --ink-faint: #8d91b6; --axis: #4a4f80;
+    --gradient-ink: linear-gradient(95deg, #a5b4fc 0%, #f9a8d4 55%, #fcd34d 100%); --on-accent: #0e1024;
   --rule: #2a2e52; --chip-bg: #20244a; --violet: #a5b4fc; --fuchsia: #f9a8d4; --cyan: #fcd34d;
   --good: #6ee7b7; --good-bg: #133227; --warn: #fdba74; --warn-bg: #3a2416;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.3); --shadow-md: 0 8px 26px rgba(0,0,0,.45);
@@ -101,7 +105,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--fuchsia); outli
 .call { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55; color: var(--ink); background: var(--chip-bg); border-radius: 8px; padding: 10px 12px; overflow-x: auto; white-space: pre; }
 .call .k { color: var(--violet); } .call .s { color: var(--cyan); } .call .c { color: var(--ink-faint); }
 
-section.block { padding-block: 44px; border-top: 1px solid var(--rule); scroll-margin-top: 76px; }
+main { counter-reset: sec; }
+section.block { padding-block: 48px; border-top: 1px solid var(--rule); scroll-margin-top: calc(var(--sticky-top) + 8px); counter-increment: sec; }
 section.block > h2 { font-family: var(--font-mono); font-weight: 500; font-size: 12.5px; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-muted); margin: 0 0 10px; display: flex; align-items: center; gap: 14px; }
 section.block > h2::before { content: ''; flex: none; width: 30px; height: 14px; background:
   linear-gradient(var(--violet), var(--violet)) 0 100% / 6px 100% no-repeat,
@@ -124,12 +129,12 @@ h3.sub { font-family: var(--font-serif); font-weight: 600; font-size: 20px; lett
 .papers { display: flex; flex-direction: column; gap: 12px; }
 .paper { position: relative; display: grid; grid-template-columns: 112px minmax(0,1fr); gap: 20px; padding: 16px 18px; background: var(--bg-elev); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: var(--shadow-sm); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
 .paper::before { content: ''; position: absolute; inset: 0; border-radius: var(--radius); padding: 1px; background: var(--gradient); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity .2s ease; pointer-events: none; }
-.paper:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: transparent; }
+.paper:hover { box-shadow: var(--shadow-md); border-color: transparent; }
 .paper:hover::before { opacity: 1; }
 @media (max-width: 640px) { .paper { grid-template-columns: 1fr; gap: 6px; } }
 .when { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .06em; padding-top: 4px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 @media (max-width: 640px) { .when { flex-direction: row; align-items: center; } }
-.pill { display: inline-flex; padding: 2px 9px; border-radius: 999px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; letter-spacing: .06em; color: #fff; background: var(--gradient); text-transform: uppercase; }
+.pill { display: inline-flex; padding: 2px 9px; border-radius: 999px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; letter-spacing: .06em; color: var(--on-accent); background: var(--gradient-ink); text-transform: uppercase; font-variant-numeric: tabular-nums; }
 .pill.plain { background: var(--chip-bg); color: var(--ink-muted); }
 .pbody { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .ptitle { font-family: var(--font-serif); font-size: 18.5px; font-weight: 500; line-height: 1.3; margin: 0; letter-spacing: -.005em; }
@@ -138,8 +143,8 @@ h3.sub { font-family: var(--font-serif); font-weight: 600; font-size: 20px; lett
 .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
 .chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 6px; background: var(--chip-bg); color: var(--ink-muted); font-size: 11px; font-weight: 500; font-family: var(--font-mono); border: 1px solid transparent; transition: border-color .15s, color .15s, background .15s; }
 a.chip:hover { color: var(--violet); border-color: var(--violet); background: var(--bg-elev); }
-a.chip.primary { color: #fff; background: var(--gradient); }
-a.chip.primary:hover { color: #fff; filter: brightness(1.08); border-color: transparent; }
+a.chip.primary { color: var(--on-accent); background: var(--gradient-ink); }
+a.chip.primary:hover { color: var(--on-accent); filter: brightness(1.08); border-color: transparent; }
 
 .compact { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
 @media (max-width: 760px) { .compact { grid-template-columns: 1fr; } }
@@ -151,7 +156,7 @@ a.chip.primary:hover { color: #fff; filter: brightness(1.08); border-color: tran
 @media (max-width: 760px) { .boards { grid-template-columns: 1fr; } }
 .board { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 18px 20px 18px 24px; background: var(--bg-elev); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; min-width: 0; transition: transform .2s ease, box-shadow .2s ease; }
 .board::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--gradient); }
-.board:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.board:hover { box-shadow: var(--shadow-md); }
 .board .top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .board .name { font-family: var(--font-serif); font-size: 20px; font-weight: 500; margin: 0; }
 .board .stat { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); }
@@ -175,7 +180,7 @@ table.audit { width: 100%; border-collapse: collapse; font-size: 13.5px; min-wid
 .evidence { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
 @media (max-width: 760px) { .evidence { grid-template-columns: 1fr; } }
 .ev { background: var(--bg-elev); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px 20px; display: grid; grid-template-columns: 112px minmax(0,1fr); gap: 16px; align-items: start; }
-.ev .big { font-family: var(--font-serif); font-size: 30px; font-weight: 500; line-height: 1.05; letter-spacing: -.02em; background: var(--gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.ev .big { font-family: var(--font-serif); font-size: 30px; font-weight: 600; line-height: 1.05; letter-spacing: -.02em; background: var(--gradient-ink); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; font-variant-numeric: tabular-nums; }
 .ev .big small { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; -webkit-text-fill-color: var(--ink-faint); color: var(--ink-faint); margin-top: 6px; font-weight: 400; }
 .ev h4 { margin: 0 0 4px; font-size: 15.5px; font-weight: 600; }
 .ev p { margin: 0; font-size: 14.5px; color: var(--ink-muted); }
@@ -218,37 +223,233 @@ footer.site .container { display: flex; justify-content: space-between; flex-wra
 .shot.noimg { border-style: dashed; justify-content: center; }
 .src-tag { display: inline-block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .04em; color: var(--violet); background: var(--chip-bg); border-radius: 5px; padding: 1px 7px; margin-right: 6px; }
 @media (prefers-reduced-motion: reduce) { .shot .img:hover img { transform: none; } }
+
+/* ---------- page-wide additions (design panel, 16 Oct 2026) ---------- */
+[id] { scroll-margin-top: calc(var(--sticky-top) + 16px); }
+#top { scroll-margin-top: 0; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: -999px; top: 8px; z-index: 50; background: var(--bg-elev); padding: 6px 10px; border-radius: 6px; }
+.skip:focus { left: 12px; }
+section.block > h2 .n::before { content: counter(sec, decimal-leading-zero) " · "; color: var(--ink-faint); }
+section.block > h2 { color: var(--ink-muted); }
+p.headline { font-family: var(--font-serif); font-weight: 500; font-size: clamp(22px, 2.6vw, 27px); line-height: 1.22; letter-spacing: -.012em; margin: 4px 0 10px; max-width: 34ch; text-wrap: balance; color: var(--ink); }
+.nav-sep { flex: none; width: 1px; height: 14px; background: var(--rule); align-self: center; }
+.nav { gap: 18px; }
+.nav a[aria-current] { color: var(--ink); }
+.nav a[aria-current]::after { transform: scaleX(1); }
+.self { display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1.5px dotted var(--ink-muted); margin-left: 4px; vertical-align: .05em; }
+.xref { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); border: none; white-space: nowrap; margin-left: 6px; }
+.xref:hover { color: var(--violet); }
+:is([id^="m-"], [id^="p-"], [id^="b-"], [id^="ev-"], [id^="h-"]):target { box-shadow: inset 2px 0 0 var(--violet), var(--shadow-md); }
+tr:target > td:first-child { box-shadow: inset 3px 0 0 var(--violet); }
+
+/* hero stat strip + key findings */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); margin: 22px 0 6px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); max-width: 640px; }
+.stats a { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px 12px 0; border: none; color: var(--ink); }
+.stats a + a { padding-left: 14px; border-left: 1px solid var(--rule); }
+.stats .v { font-family: var(--font-serif); font-weight: 600; font-size: 24px; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.stats .l { font-family: var(--font-mono); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-muted); line-height: 1.45; }
+.stats a:hover .v { color: var(--violet); }
+@media (max-width: 600px) { .stats { grid-template-columns: repeat(2, minmax(0,1fr)); } .stats a:nth-child(3) { border-left: none; padding-left: 0; } .stats a:nth-child(n+3) { border-top: 1px solid var(--rule); } }
+.findings { margin: 18px 0 0; display: flex; flex-direction: column; gap: 6px; max-width: 640px; }
+.findings .lab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+.findings a { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); border: none; display: grid; grid-template-columns: 4.6em minmax(0,1fr) auto; gap: 12px; align-items: baseline; }
+.findings a b { font-weight: 500; text-align: right; background: var(--gradient-ink); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; min-width: 5.2em; }
+.findings a span { color: var(--ink-faint); }
+.findings a:hover { color: var(--violet); }
+
+/* Jev primitive glyphs (schematic) */
+.glyph { height: 30px; display: flex; align-items: flex-end; gap: 3px; margin: 2px 0 2px; }
+.glyph i { width: 7px; border-radius: 999px; background: var(--ink-faint); display: block; }
+.glyph i.w { background: var(--gradient); }
+.glyph .ann { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-faint); margin-left: 8px; align-self: center; }
+.glyph.noul { align-items: center; }
+.glyph.noul .trk { width: 120px; height: 8px; border-radius: 999px; background: var(--chip-bg); overflow: hidden; }
+.glyph.noul .trk b { display: block; width: 70%; height: 100%; background: var(--gradient); border-radius: 999px; }
+.schem { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-faint); margin: 10px 0 0; }
+dl.facts { display: grid; grid-template-columns: max-content minmax(0,1fr); gap: 8px 18px; margin: 18px 0 0; max-width: 80ch; font-size: 15px; }
+dl.facts dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); padding-top: 3px; }
+dl.facts dd { margin: 0; }
+.inchips { display: inline-flex; gap: 6px; flex-wrap: wrap; margin-right: 6px; }
+
+/* figures */
+figure.fig { margin: 26px 0 14px; }
+.figcap { margin-top: 12px; display: flex; flex-direction: column; gap: 3px; max-width: 90ch; }
+.figcap .fn { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; color: var(--ink-faint); }
+.figcap .claim { font-size: 13.5px; color: var(--ink-muted); }
+.figcap .src { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); }
+
+/* Fig. 1 size ladder */
+.ladder { list-style: none; margin: 0; padding: 0; }
+.lgroup { font-family: var(--font-serif); font-weight: 600; font-size: 17px; margin: 22px 0 6px; }
+.lrow { display: grid; grid-template-columns: 210px minmax(0,1fr) 136px 92px; grid-template-areas: "name track sizes inputs" ". desc desc desc"; column-gap: 16px; row-gap: 2px; padding: 10px 8px; border-radius: 8px; align-items: center; }
+.lrow:hover, .lrow:focus-within { background: var(--chip-bg); }
+.lrow .lname { grid-area: name; font-weight: 600; font-size: 14.5px; color: var(--ink); border: none; min-width: 0; }
+.lrow .lname:hover { color: var(--violet); }
+.lrow .track { grid-area: track; }
+.lrow .lsizes { grid-area: sizes; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.lrow .linputs { grid-area: inputs; display: flex; gap: 3px; flex-wrap: wrap; align-items: center; }
+.lrow .ldesc { grid-area: desc; margin: 0; font-size: 13.5px; color: var(--ink-muted); }
+.lhdr { display: grid; grid-template-columns: 210px minmax(0,1fr) 136px 92px; column-gap: 16px; padding: 0 8px; align-items: end; }
+.lhdr .h { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+.track { position: relative; height: 26px; }
+.track::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--rule); }
+.track .tk { position: absolute; top: 4px; bottom: 4px; width: 1px; background: var(--axis); }
+.axislab { position: relative; height: 16px; }
+.axislab span { position: absolute; transform: translateX(-50%); font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint); white-space: nowrap; }
+.axislab span:first-child { transform: none; }
+.mk { position: absolute; top: 50%; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: var(--ink-muted); }
+.mk.video { background: var(--fuchsia); } .mk.image { background: var(--violet); } .mk.unk { background: var(--ink-faint); }
+.mk.moe { background: transparent; border: 1.5px solid var(--ink-muted); }
+.mk em { position: absolute; left: 50%; transform: translateX(-50%); bottom: 11px; font-style: normal; font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-faint); white-space: nowrap; }
+.mk em.lo { bottom: auto; top: 11px; }
+.seg { position: absolute; top: 50%; height: 2px; margin-top: -1px; background: var(--ink-muted); opacity: .55; }
+.seg.rng { background: none; border-top: 2px dashed var(--ink-muted); opacity: .8; height: 0; }
+.seg.video { background: var(--fuchsia); } .seg.image { background: var(--violet); } .seg.mix { background: var(--rule); opacity: 1; }
+.seg.rng.video { border-top-color: var(--fuchsia); }
+.in { display: inline-flex; align-items: center; justify-content: center; min-width: 17px; height: 17px; padding: 0 3px; border-radius: 4px; background: var(--chip-bg); font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; }
+.in.I { color: var(--violet); } .in.V { color: var(--fuchsia); } .in.A { color: var(--cyan); } .in.q { color: var(--ink-muted); background: transparent; border: 1px dashed var(--ink-faint); }
+.in.word { color: var(--ink-muted); background: transparent; padding: 0; }
+.inote { font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-faint); }
+.keyline { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: 12.5px; color: var(--ink-muted); }
+.keyline .sw { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+@media screen and (max-width: 819px) {
+  .lhdr { grid-template-columns: minmax(0,1fr); }
+  .lhdr .h { display: none; }
+  .lrow { grid-template-columns: minmax(0,1fr) auto; grid-template-areas: "name name" "sizes inputs" "track track" "desc desc"; row-gap: 4px; }
+  .lrow .track { margin: 8px 0 2px; }
+}
+
+/* Table 1: boards at a glance */
+.t1wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bg-elev); margin: 22px 0 6px; }
+table.t1 { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 760px; }
+.t1 th { text-align: left; font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); padding: 11px 12px; border-bottom: 1px solid var(--rule); }
+.t1 td { padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.t1 tr:last-child td { border-bottom: none; }
+.t1 td.jev { background: var(--chip-bg); }
+.t1 .nm { font-weight: 600; }
+.t1 .sc { display: block; margin-top: 2px; font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.t1 .mu { color: var(--ink-muted); }
+.fnotes { font-size: 12.5px; color: var(--ink-muted); display: flex; flex-direction: column; gap: 2px; margin: 4px 0 24px; }
+
+@media screen and (min-width: 821px) { .shots > .shot:last-child:nth-child(odd) { grid-column: 1 / -1; flex-direction: row; } .shots > .shot:last-child:nth-child(odd) .img { width: 58%; flex: none; height: auto; max-height: 340px; border-bottom: none; border-right: 1px solid var(--rule); } .shots > .shot:last-child:nth-child(odd) figcaption { justify-content: center; } }
+/* Fig. 2 encoding strip */
+.strip { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: flex-end; }
+.run { display: flex; flex-direction: column; gap: 6px; }
+.run .rl { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); letter-spacing: .04em; }
+.run .sq { display: flex; gap: 5px; }
+.sq a { width: 20px; height: 20px; border-radius: 4px; display: block; border: none; background: var(--ink-faint); opacity: .55; transition: transform .15s; }
+.sq a.shared { background: linear-gradient(135deg, var(--violet) 50%, transparent 50%); opacity: 1; box-shadow: inset 0 0 0 1.5px var(--violet); }
+.sq a.sep { background: transparent; opacity: 1; box-shadow: inset 0 0 0 2px var(--violet); }
+.sq a.nonex::after { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--good); margin: 6px auto 0; }
+.sq a.sep.nonex::after, .sq a.shared.nonex::after { margin-top: 6px; }
+.sq a:hover, .sq a:focus-visible { transform: scale(1.18); opacity: 1; }
+.enckey { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 16px 0 0; font-size: 13px; color: var(--ink-muted); }
+.enckey .k { display: inline-flex; gap: 7px; align-items: center; }
+.enckey .k i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; background: var(--ink-faint); opacity: .55; }
+.enckey .k i.shared { background: linear-gradient(135deg, var(--violet) 50%, transparent 50%); opacity: 1; box-shadow: inset 0 0 0 1.5px var(--violet); }
+.enckey .k i.sep { background: transparent; opacity: 1; box-shadow: inset 0 0 0 2px var(--violet); }
+.enckey .k i.nonex { background: transparent; opacity: 1; }
+.enckey .k i.nonex::after { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--good); margin: 3.5px auto 0; }
+.enckey b { font-family: var(--font-mono); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tag.shared { background: linear-gradient(135deg, var(--chip-bg) 50%, transparent 50%); color: var(--violet); box-shadow: inset 0 0 0 1px var(--violet); }
+.tag.sep { background: transparent; color: var(--violet); box-shadow: inset 0 0 0 1.5px var(--violet); }
+.tag.no { background: transparent; color: var(--ink-faint); padding: 0; }
+.tag.other { background: transparent; color: var(--ink-muted); padding: 0; }
+.audit tr.group td .cnt { color: var(--ink-faint); margin-left: 6px; }
+
+/* Fig. 3 evidence */
+h3.evg { grid-column: 1 / -1; font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); margin: 18px 0 -2px; }
+h3.evg:first-child { margin-top: 0; }
+.ev .big small { line-height: 1.35; font-size: 10px; letter-spacing: .05em; }
+.evidence { align-items: start; }
+.ev .big.word { background: none; -webkit-text-fill-color: var(--ink); color: var(--ink); }
+.ev .big.long { font-size: 23px; }
+.ev { scroll-margin-top: calc(var(--sticky-top) + 16px); }
+.db { margin: 12px 0 4px; display: flex; flex-direction: column; gap: 4px; }
+.dbrow { display: grid; grid-template-columns: 62px minmax(0,1fr); gap: 10px; align-items: center; }
+.dbrow .ml { font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint); line-height: 1.3; }
+.dbt { position: relative; height: 46px; }
+.dbt::before { content: ''; position: absolute; left: 0; right: 0; top: 23px; height: 1px; background: var(--axis); }
+.dbt .e0, .dbt .e1 { position: absolute; top: 19px; width: 1px; height: 9px; background: var(--axis); }
+.dbt .e0 { left: 0; } .dbt .e1 { right: 0; }
+.dbt .el { position: absolute; top: 30px; font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-faint); }
+.dbt .el.r { right: 0; }
+.dbt .con { position: absolute; top: 22px; height: 2px; background: var(--violet); opacity: .5; }
+.dbt .con.readme { background: none; border-top: 2px dashed var(--violet); height: 0; }
+.dbt .p { position: absolute; top: 23px; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; }
+.dbt .p.b { background: var(--bg-elev); box-shadow: inset 0 0 0 1.5px var(--ink-faint); }
+.dbt .p.a { background: var(--violet); }
+.dbt .p.m { background: var(--bg-elev); box-shadow: inset 0 0 0 1.5px var(--violet); }
+.dbt .p em { position: absolute; left: 50%; transform: translateX(-50%); bottom: 10px; font-style: normal; font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); white-space: nowrap; }
+.dbt .p em.lo { bottom: auto; top: 10px; }
+.dbt .p.a em { color: var(--ink); }
+.dbleg { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-muted); }
+.evnote { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); margin: 0 0 14px; }
+.ev .src .self { margin-left: 5px; }
+.lines2 { display: flex; flex-direction: column; gap: 2px; margin: 4px 0 0; font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+
+/* RL chips */
+.st { display: inline-flex; font-family: var(--font-mono); font-size: 10.5px; padding: 1px 7px; border-radius: 5px; margin-right: 6px; }
+.st.ok { background: var(--good-bg); color: var(--good); } .st.warn { background: var(--warn-bg); color: var(--warn); } .st.neu { background: var(--chip-bg); color: var(--ink-muted); }
+.kind { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-faint); }
+.mini .meta .xref { margin-left: 4px; }
+@media screen and (min-width: 1000px) { .compact.c3 { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+.mini .meta { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 2px; }
+
+/* Fig. 4 schematic (private) */
+.pipe { display: flex; flex-direction: column; gap: 0; }
+.box { position: relative; background: var(--chip-bg); border: 1px solid var(--rule); border-radius: 8px; padding: 9px 12px; font-family: var(--font-mono); font-size: 12px; color: var(--ink); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.box .badge { font-size: 10px; color: var(--violet); border: 1px solid var(--violet); border-radius: 999px; padding: 0 7px; }
+.box .q { font-size: 10.5px; color: var(--ink-muted); border: 1px solid var(--ink-muted); border-radius: 5px; padding: 0 6px; }
+.box .q.dash { border-style: dashed; }
+.arr { height: 16px; width: 2px; background: var(--rule); margin-left: 22px; position: relative; }
+.arr::after { content: ''; position: absolute; left: -4px; bottom: -1px; border: 5px solid transparent; border-top-color: var(--rule); border-bottom: 0; }
+.box .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
+.box .bars i { width: 5px; border-radius: 999px; background: var(--ink-faint); display: block; }
+.box .bars i.w { background: var(--gradient); }
+
+/* footer */
+footer.site .container { flex-direction: column; gap: 5px; font-family: var(--font-mono); font-size: 11px; }
+footer.site .grule { height: 3px; border-radius: 2px; background: var(--gradient); margin-bottom: 14px; }
+footer.site a { color: var(--ink-muted); border: none; }
+@media (forced-colors: active) { .hero h1 i, .brand i, .veva h3 i, .ev .big, .findings a b { background: none; -webkit-text-fill-color: CanvasText; } }
+@media (prefers-reduced-motion: reduce) { .sq a:hover { transform: none; } }
+@media print { .topbar, .scroll-progress, .skip { display: none; } .table-wrap, .t1wrap { overflow: visible; } table.audit, table.t1 { min-width: 0; font-size: 9pt; } }
 </style>
 </head>
 <body>
 
-
+<a class="skip" href="#top">Skip to content</a>
 <div class="scroll-progress" id="progress"></div>
 
 <header class="topbar">
   <div class="container topbar-inner">
     <a class="brand" href="#top">Jev <i>field guide</i></a>
-    <nav class="nav" aria-label="Sections">
-      <a href="#jev">Jev</a>
-      <a href="#text">Text</a>
-      <a href="#vision">Vision</a>
-      <a href="#models">Models</a>
-      <a href="#boards">Boards</a>
-      <a href="#hubs">Browse</a>
-      <a href="#audit">Audit</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#rl">RL</a>
-    </nav>
+    <nav class="nav" aria-label="Sections"><a href="#jev">Jev</a><span class="nav-sep" aria-hidden="true"></span><a href="#text">Text</a><a href="#vision">Vision</a><span class="nav-sep" aria-hidden="true"></span><a href="#models">Models</a><a href="#boards">Boards</a><a href="#hubs">Browse</a><span class="nav-sep" aria-hidden="true"></span><a href="#audit">Audit</a><a href="#evidence">Evidence</a><a href="#rl">RL</a></nav>
   </div>
 </header>
 
-<main class="container" id="top">
-  <div class="hero">
+<main class="container">
+
+<div class="hero" id="top">
     <div>
       <h1>Decisions, <i>not text.</i></h1>
-      <p class="lede">Everything we found on Jev-style decision models: the papers, the open models, the leaderboards, and a code-level audit of about 30 implementations. Jev appeared on 15 September 2026. By mid-October about 130 papers and nearly 2,000 Hugging Face models referenced it.</p>
-      <p class="lede" style="font-size:15.5px;color:var(--ink-muted)">Numbers are as reported by each source; anything we could not check is marked.</p>
+      <p class="lede">Everything we found on Jev-style decision models: the papers, the open models, the leaderboards, and a code-level audit of 27 implementations. Jev appeared on 15 September 2026. By mid-October about 130 papers mentioned it, and nearly 2,000 Hugging Face models were tagged as decision models.</p>
+      <p class="lede" style="font-size:15.5px;color:var(--ink-muted)">Numbers are as reported by each source; claims taken from a README, model card or notes rather than a paper table are marked <span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>.</p>
+      <div class="stats" aria-label="The field in numbers">
+        <a href="#h-arxiv"><span class="v">~131</span><span class="l">arXiv papers mentioning Jev · 19 Sep – 14 Oct</span></a>
+        <a href="#h-hf"><span class="v">1,981</span><span class="l">HF models tagged decision-model · 15 Oct</span></a>
+        <a href="#audit"><span class="v">27</span><span class="l">repos audited at code level</span></a>
+        <a href="#boards"><span class="v">5</span><span class="l">leaderboards compared</span></a>
+      </div>
       <div class="meta-line">Compiled 15–16 Oct 2026 · Vangelis Kazakos</div>
+      <div class="findings">
+        <span class="lab">Key findings, as reported</span>
+        <a href="#ev-joint"><b>+18.1</b>joint beats separate encoding · MMLU<span>MetaEncoder</span></a>
+        <a href="#ev-backbone"><b>+6.0</b>LoRA beats training the head · Capability<span>Inner Jev</span></a>
+        <a href="#ev-softiou"><b>+4.6</b>soft-IoU loss for grounding · mIoU<span>VideoJev</span></a>
+      </div>
     </div>
     <aside class="typecard" aria-label="What a Jev call looks like">
       <span class="label">One Jev call, one forward pass</span>
@@ -264,229 +465,280 @@ footer.site .container { display: flex; justify-content: space-between; flex-wra
   </div>
 
   <section class="block" id="jev">
-    <h2>What Jev is</h2>
+    <h2><span class="n"></span>What Jev is</h2>
+    <p class="headline">One forward pass, one calibrated distribution.</p>
     <p class="intro">Jev is a closed "System One" decision model from TypeSafe AI, launched 15 September 2026. It answers a typed question about a state with a calibrated probability, without generating text. The open work below copies its interface.</p>
     <div class="prims">
-      <div class="prim"><span class="name">Choice</span><span class="returns">→ distribution over ≤255 options</span><p>Pick one of the declared options. "None of these" is not a primitive; some open models add it as an option or a separate gate.</p></div>
-      <div class="prim"><span class="name">Score</span><span class="returns">→ distribution over rubric levels</span><p>Place the input on a declared scale, for example 1–5 relevance.</p></div>
-      <div class="prim"><span class="name">Noul</span><span class="returns">→ P(yes)</span><p>Probability that the answer to a yes/no question is yes.</p></div>
+      <div class="prim"><span class="name">Choice</span><div class="glyph" aria-hidden="true"><i class="w" style="height:28px"></i><i style="height:13px"></i><i style="height:8px"></i><i style="height:6px"></i><i style="height:4px"></i><span class="ann">≤255 options</span></div><span class="returns">→ distribution over ≤255 options</span><p>Pick one of the declared options. "None of these" is not a primitive; some open models add it as an option or a separate gate.</p></div>
+      <div class="prim"><span class="name">Score</span><div class="glyph" aria-hidden="true"><i style="height:5px"></i><i style="height:11px"></i><i style="height:19px"></i><i class="w" style="height:28px"></i><i style="height:12px"></i><span class="ann">levels 1 … 5</span></div><span class="returns">→ distribution over rubric levels</span><p>Place the input on a declared scale, for example 1–5 relevance.</p></div>
+      <div class="prim"><span class="name">Noul</span><div class="glyph noul" aria-hidden="true"><span class="trk"><b></b></span><span class="ann">P(yes)</span></div><span class="returns">→ P(yes)</span><p>Probability that the answer to a yes/no question is yes.</p></div>
     </div>
-    <ul class="notes">
-      <li><b>Inputs.</b> State (the context: a document, a screen, a video), question (what to decide), options (the candidates).</li>
-      <li><b>Training.</b> Jev is trained with RLCD, "Reinforcement Learning for Calibrated Decisions". The objective and data source are public. The method, reward and base model are not.</li>
-      <li><b>Name clash.</b> "RL from Contrastive Distillation" (Yang et al., ICLR 2024) is unrelated.</li>
-    </ul>
+    <p class="schem">schematic: the glyphs show the output type, not data</p>
+    <dl class="facts">
+      <dt>Inputs</dt><dd><span class="inchips"><span class="chip">state</span><span class="chip">question</span><span class="chip">options</span></span>State (the context: a document, a screen, a video), question (what to decide), options (the candidates).</dd>
+      <dt>Training</dt><dd>Jev is trained with RLCD, "Reinforcement Learning for Calibrated Decisions". The objective and data source are public. The method, reward and base model are not.</dd>
+      <dt>Name clash</dt><dd>"RL from Contrastive Distillation" (Yang et al., ICLR 2024) is unrelated.</dd>
+    </dl>
   </section>
 
   <section class="block" id="text">
-    <h2>Text papers</h2>
-    <p class="intro">The five we found most notable, then the rest. Most are two to four weeks old, so citation counts are not yet meaningful.</p>
+    <h2><span class="n"></span>Text papers</h2>
+    <p class="headline">Five papers to read first.</p>
+    <p class="intro">The five we found most notable, then the rest. All appeared after Jev's 15 Sep launch, so citation counts are not yet meaningful.</p>
     <div class="papers">
-      <article class="paper"><div class="when"><span class="pill">13 Oct</span>NUS</div><div class="pbody">
+      <article class="paper" id="p-jeva"><div class="when"><span class="pill">13 Oct</span>Arch</div><div class="pbody">
         <h3 class="ptitle">Jeva: System One Models from First Principles</h3>
         <p class="pdesc">Request and each option are encoded separately (options cacheable). A small decision block lets the request vector read the whole option set before scoring, and a coverage gate gives an explicit "none". Supervised plus filtered distillation, no RL. Run at <span class="num">2,048</span> options.</p>
-        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.18773">arXiv</a><a class="chip" href="https://github.com/LiQiiiii/Jeva">Code</a><a class="chip" href="https://huggingface.co/LIQIIIII/Jeva-4B">Jeva-4B</a></div></div></article>
-      <article class="paper"><div class="when"><span class="pill">30 Sep</span>RL</div><div class="pbody">
+        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.18773">arXiv</a><a class="chip" href="https://github.com/LiQiiiii/Jeva">Code</a><a class="chip" href="https://huggingface.co/LIQIIIII/Jeva-4B">Jeva-4B</a><span class="xref" style="margin-left:2px">NUS</span><a class="xref" href="#a-jeva">audit ↗</a></div></div></article>
+      <article class="paper" id="p-openjev-rlcd"><div class="when"><span class="pill">30 Sep</span>RL</div><div class="pbody">
         <h3 class="ptitle">OpenJev-RLCD: A Working RLCD Implementation</h3>
         <p class="pdesc">First open version of Jev's RL, on Qwen3-1.7B. Rewards the committed answer distribution with a strictly proper scoring rule: calibrate first, then reinforce. Beats SFT, RFT and GRPO on selective prediction; cannot beat CE when uncertainty is annotator disagreement.</p>
         <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2609.38850">arXiv</a><a class="chip" href="https://github.com/ZimmyGao/openjev-rlcd">Code</a></div></div></article>
-      <article class="paper"><div class="when"><span class="pill">12 Oct</span>RL</div><div class="pbody">
+      <article class="paper" id="p-startlux"><div class="when"><span class="pill">12 Oct</span>RL</div><div class="pbody">
         <h3 class="ptitle">StartLux-Decision: RL for Calibrated Deliberative Decisions (RLCD²)</h3>
         <p class="pdesc">0.8B–27B models that reason only when uncertain, trained with RL and proper scoring rules against a frozen reference. <span class="num">73.4</span> on Decision Index 0.3. RL training code not released.</p>
-        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.17309">arXiv</a><a class="chip" href="https://github.com/StartLuxLabs/StartLux-Decision">Code</a></div></div></article>
-      <article class="paper"><div class="when"><span class="pill">12 Oct</span>Recipe</div><div class="pbody">
+        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.17309">arXiv</a><a class="chip" href="https://github.com/StartLuxLabs/StartLux-Decision">Code</a><a class="xref" href="#a-startlux">audit ↗</a></div></div></article>
+      <article class="paper" id="p-inner-jev"><div class="when"><span class="pill">12 Oct</span>Recipe</div><div class="pbody">
         <h3 class="ptitle">Releasing the Inner Jev: A Simple Recipe for Open Decision Models</h3>
-        <p class="pdesc">Read option-letter logits from open LLMs, then LoRA fine-tune. Matches or beats Jev on decision tasks. Its ablation: LoRA drives the gain, not the head (head only <span class="num">78.9</span>, LoRA <span class="num">84.9</span>).</p>
-        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.17205">arXiv</a><a class="chip" href="https://github.com/j-geuter/jeff-serve">Serving code</a></div></div></article>
-      <article class="paper"><div class="when"><span class="pill">29 Sep</span>Eval</div><div class="pbody">
+        <p class="pdesc">Read option-letter logits from open LLMs, then LoRA fine-tune. Matches or beats Jev on decision tasks. Its ablation: LoRA drives the gain, not the head (Gemma 4 31B, Capability on OpenDecisions: head only <span class="num">78.9</span>, LoRA <span class="num">84.9</span>).</p>
+        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.17205">arXiv</a><a class="chip" href="https://github.com/j-geuter/jeff-serve">Serving code</a><a class="xref" href="#ev-backbone">→ evidence</a></div></div></article>
+      <article class="paper" id="p-eval-jev"><div class="when"><span class="pill">29 Sep</span>Eval</div><div class="pbody">
         <h3 class="ptitle">Evaluating and Benchmarking the System One Model Jev</h3>
         <p class="pdesc">The main independent evaluation of Jev: 37 datasets, calibration, comparisons with open Qwen and Gemma models.</p>
         <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2609.37647">arXiv</a></div></div></article>
     </div>
 
     <h3 class="sub">More text recipes and studies</h3>
-    <div class="compact">
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.02076">LLM-as-Jev</a><p>Numbered options read through a prefix-free trie (unbounded K); KL anchors stop generation from degrading. Paper only.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.00831">AnyJev</a><p>Training-free readout from any LLM; averaging over option rotations cuts answer flips from 0.230 to 0.073. <a href="https://github.com/nokia-applied-research/AnyJev">Code</a></p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.17175">FunDM</a><p>Label-free decision head on a frozen LLM, distilled from the full model; 75.0 vs 75.7 using 24 of 36 layers. <a href="https://github.com/Ujjawal-K-Panchal/FunDM">Code</a></p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.03935">General Decision Models / JEVal</a><p>Self-distilled decision models; finds they pick the likely outcome but overstate its probability.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.18233">Runoff</a><p>Order invariance for multiple-choice decisions.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.11692">Can Jev be your Q or Policy?</a><p>Jev used as policy, score rater, meta-regulator and transition model inside RL loops.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2609.36965">Chinese-Jev</a><p>Laya-family encoder for Chinese with GRPO-style RLCD and DDP training. <a href="https://github.com/gulucaptain/Chinese-Jev">Code</a></p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2609.29429">Just Ask Jev</a><p>RLCD-trained decisions used as a zero-shot detector.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.11392">TypedBench</a><p>A paper benchmark for typed decisions: calibration, sensitivity to wording, cost.</p></div>
+    <div class="compact c3">
+      <div class="mini" id="p-llm-as-jev"><a class="t" href="https://arxiv.org/abs/2610.02076">LLM-as-Jev</a><p>Numbered options read through a prefix-free trie (unbounded K); KL anchors stop generation from degrading. Paper only.</p></div>
+      <div class="mini" id="p-anyjev"><a class="t" href="https://arxiv.org/abs/2610.00831">AnyJev</a><p>Training-free readout from any LLM; averaging over option rotations cuts answer flips from 0.230 to 0.073. <a href="https://github.com/nokia-applied-research/AnyJev">Code</a> <a class="xref" href="#ev-order">→ evidence</a></p></div>
+      <div class="mini" id="p-fundm"><a class="t" href="https://arxiv.org/abs/2610.17175">FunDM</a><p>Label-free decision head on a frozen LLM, distilled from the full model; 75.0 vs 75.7 using 24 of 36 layers. <a href="https://github.com/Ujjawal-K-Panchal/FunDM">Code</a></p></div>
+      <div class="mini" id="p-jeval"><a class="t" href="https://arxiv.org/abs/2610.03935">General Decision Models / JEVal</a><p>Self-distilled decision models; finds they pick the likely outcome but overstate its probability.</p></div>
+      <div class="mini" id="p-runoff"><a class="t" href="https://arxiv.org/abs/2610.18233">Runoff</a><p>Order invariance for multiple-choice decisions.</p></div>
+      <div class="mini" id="p-q-policy"><a class="t" href="https://arxiv.org/abs/2610.11692">Can Jev be your Q or Policy?</a><p>Jev used as policy, score rater, meta-regulator and transition model inside RL loops.</p></div>
+      <div class="mini" id="p-chinese-jev"><a class="t" href="https://arxiv.org/abs/2609.36965">Chinese-Jev</a><p>Laya-family encoder for Chinese with GRPO-style RLCD and DDP training. <a href="https://github.com/gulucaptain/Chinese-Jev">Code</a></p></div>
+      <div class="mini" id="p-just-ask"><a class="t" href="https://arxiv.org/abs/2609.29429">Just Ask Jev</a><p>RLCD-trained decisions used as a zero-shot detector.</p></div>
+      <div class="mini" id="p-typedbench"><a class="t" href="https://arxiv.org/abs/2610.11392">TypedBench</a><p>A paper benchmark for typed decisions: calibration, sensitivity to wording, cost.</p></div>
     </div>
   </section>
 
   <section class="block" id="vision">
-    <h2>Vision and video</h2>
+    <h2><span class="n"></span>Vision and video</h2>
+    <p class="headline">Beyond text: one video grounder, one bi-encoder, image-side speed-ups.</p>
     <p class="intro">Everything Jev-style we found beyond text.</p>
     <div class="papers">
-      <article class="paper"><div class="when"><span class="pill">13 Oct</span>Video</div><div class="pbody">
+      <article class="paper" id="p-videojev"><div class="when"><span class="pill">13 Oct</span>Video</div><div class="pbody">
         <h3 class="ptitle">VideoJev</h3>
         <p class="pdesc">4B and 35B-A3B models. One sequence [video → question → one timestamp option per 2 frames → decide token]; the decide token scores every option. Independent "inside the event" probabilities, BCE plus soft-IoU loss, Kadane decoding. Average mIoU <span class="num">65.3</span> (4B) on Charades-STA, ActivityNet and QVHighlights. Short and medium clips only.</p>
-        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.18615">arXiv</a><a class="chip" href="https://github.com/MCG-NJU/VideoJev">Code</a><a class="chip" href="https://huggingface.co/ZhuYuhan/VideoJev-4B">VideoJev-4B</a></div></div></article>
-      <article class="paper"><div class="when"><span class="pill">8 Oct</span>Meta</div><div class="pbody">
+        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.18615">arXiv</a><a class="chip" href="https://github.com/MCG-NJU/VideoJev">Code</a><a class="chip" href="https://huggingface.co/ZhuYuhan/VideoJev-4B">VideoJev-4B</a><a class="xref" href="#ev-softiou">→ evidence</a></div></div></article>
+      <article class="paper" id="p-metaencoder"><div class="when"><span class="pill">8 Oct</span>Meta</div><div class="pbody">
         <h3 class="ptitle">MetaEncoder</h3>
         <p class="pdesc">A 30B decoder used as a bi-encoder: request and candidates encoded separately, text plus image and video, for decisions and million-scale retrieval. Evaluation code only.</p>
-        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.11316">arXiv</a><a class="chip" href="https://github.com/facebook/meta-encoder-eval">Eval code</a></div></div></article>
-      <article class="paper"><div class="when"><span class="pill">22 Sep</span>Image</div><div class="pbody">
+        <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.11316">arXiv</a><a class="chip" href="https://github.com/facebook/meta-encoder-eval">Eval code</a><a class="xref" href="#ev-joint">→ evidence</a></div></div></article>
+      <article class="paper" id="p-visual-jev"><div class="when"><span class="pill">22 Sep</span>Image</div><div class="pbody">
         <h3 class="ptitle">Visual Jev</h3>
         <p class="pdesc">Encode an image once, answer many multiple-choice questions in a batch: <span class="num">8.9×</span> faster. A new typed head tied the plain LM-head readout.</p>
         <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2609.25845">arXiv</a><a class="chip" href="https://github.com/guanxuyu-sv/Visual-Jev">Code</a></div></div></article>
-      <article class="paper"><div class="when"><span class="pill">8 Oct</span>Speed</div><div class="pbody">
+      <article class="paper" id="p-fastjev"><div class="when"><span class="pill">8 Oct</span>Speed</div><div class="pbody">
         <h3 class="ptitle">FastJEV</h3>
         <p class="pdesc">Training-free speed-ups for multimodal candidate scoring (prefix sharing, pruning): <span class="num">−44%</span> candidate depth. Built on OmniJev, whose option scorer has an explicit abstain logit.</p>
         <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.11379">arXiv</a><a class="chip" href="https://github.com/JieMaMagic/FastJEV">Code</a><a class="chip" href="https://github.com/tinnel123666888/OmniJev">OmniJev</a></div></div></article>
-      <article class="paper"><div class="when"><span class="pill">30 Sep</span>Medical</div><div class="pbody">
+      <article class="paper" id="p-omnimed"><div class="when"><span class="pill">30 Sep</span>Medical</div><div class="pbody">
         <h3 class="ptitle">OmniMed-Jev</h3>
         <p class="pdesc">Calibrated candidate decisions on medical images. Its head lets candidates attend to each other (with log K as a feature), conditioned on the query.</p>
         <div class="links"><a class="chip primary" href="https://arxiv.org/abs/2610.00381">arXiv</a><a class="chip" href="https://github.com/lytang63/OmniMed-Jev">Code</a></div></div></article>
     </div>
     <h3 class="sub">Applications</h3>
-    <div class="compact">
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2609.29283">PixelJev</a><p>Small VLMs (2B, 4B) making Jev-style choices on images; object and action selection left as future work. Paper only.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2609.34969">NavJev</a><p>Vision-language navigation with compressed visual candidate actions; R2R-CE 27.0 SR at 0.65 s per step.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2609.30186">Jev-Mobile</a><p>The closed Jev API picks phone-UI actions; a VLM plans only occasionally. −73% cost.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.09683">System Switch</a><p>A fast decision model hands over to a reasoning VLM when a gate opens (Doom).</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.15742">RSAJEV</a><p>Remote-sensing classification with a calibrated "abstain" option.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.19478">AgriJev</a><p>Agriculture candidate scoring with adapted Qwen3.5 models.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2609.24395">JEVQA</a><p>Zero-shot video quality prediction with a decision model.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.09328">Visual Jev Rewards</a><p>A visual verifier whose yes-probabilities are GRPO rewards for image generation.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.19118">DecisionRobust</a><p>Robustness benchmark for decision models, text and vision.</p></div>
+    <div class="compact c3">
+      <div class="mini" id="p-pixeljev"><a class="t" href="https://arxiv.org/abs/2609.29283">PixelJev</a><p>Small VLMs (2B, 4B) making Jev-style choices on images; object and action selection left as future work. Paper only.</p></div>
+      <div class="mini" id="p-navjev"><a class="t" href="https://arxiv.org/abs/2609.34969">NavJev</a><p>Vision-language navigation with compressed visual candidate actions; R2R-CE 27.0 SR at 0.65 s per step.</p></div>
+      <div class="mini" id="p-jev-mobile"><a class="t" href="https://arxiv.org/abs/2609.30186">Jev-Mobile</a><p>The closed Jev API picks phone-UI actions; a VLM plans only occasionally. −73% cost.</p></div>
+      <div class="mini" id="p-system-switch"><a class="t" href="https://arxiv.org/abs/2610.09683">System Switch</a><p>A fast decision model hands over to a reasoning VLM when a gate opens (Doom).</p></div>
+      <div class="mini" id="p-rsajev"><a class="t" href="https://arxiv.org/abs/2610.15742">RSAJEV</a><p>Remote-sensing classification with a calibrated "abstain" option.</p></div>
+      <div class="mini" id="p-agrijev"><a class="t" href="https://arxiv.org/abs/2610.19478">AgriJev</a><p>Agriculture candidate scoring with adapted Qwen3.5 models.</p></div>
+      <div class="mini" id="p-jevqa"><a class="t" href="https://arxiv.org/abs/2609.24395">JEVQA</a><p>Zero-shot video quality prediction with a decision model.</p></div>
+      <div class="mini" id="p-vjr"><a class="t" href="https://arxiv.org/abs/2610.09328">Visual Jev Rewards</a><p>A visual verifier whose yes-probabilities are GRPO rewards for image generation.</p></div>
+      <div class="mini" id="p-decisionrobust"><a class="t" href="https://arxiv.org/abs/2610.19118">DecisionRobust</a><p>Robustness benchmark for decision models, text and vision.</p></div>
     </div>
   </section>
 
   <section class="block" id="models">
-    <h2>Open models</h2>
+    <h2><span class="n"></span>Open models</h2>
+    <p class="headline">Text-only weights go down to 17M; multimodal starts at 0.6B.</p>
     <p class="intro">Weights you can download, multimodal first. Video support means whole-clip question answering at 2 fps.</p>
-    <div class="compact">
-      <div class="mini"><a class="t" href="https://huggingface.co/collections/vllm-sr/decision-30">vllm-sr Decision 3.0 (d3)</a><p>0.6B–26B. Text, images, video at 2 fps (max 32 frames). #1 on the Jev Decision Index text board (66.3) and its Vision Index (71.3). Noncausal attention; trained on AMD MI325X.</p></div>
-      <div class="mini"><a class="t" href="https://huggingface.co/Cloudflare/clef-omni">Cloudflare clef / clef-flash / clef-omni</a><p>27B / 9B / 35B. clef-omni reads text, image, audio and video; a joint schema head scores all options of all questions. No training code.</p></div>
-      <div class="mini"><a class="t" href="https://huggingface.co/LiquidAI/d1-omni-600M">LiquidAI d1-omni-600M, d1-3B</a><p>0.6B: text, image, speech, no video. d1-3B: text and images.</p></div>
-      <div class="mini"><a class="t" href="https://huggingface.co/h2oai/h2o-lightning-4b">h2o-lightning-4b</a><p>4B, text and image; #1 open-weight on JevBench 7–15 Oct (72.5).</p></div>
-      <div class="mini"><a class="t" href="https://huggingface.co/autotrust/JEV-27B-VL">autotrust JEV-27B-VL</a><p>27B, image; distilled from Jev outputs.</p></div>
-      <div class="mini"><a class="t" href="https://huggingface.co/Mapika/decider-2b-vision">Decider 2B vision</a><p>Letter readout with option-count temperature calibration.</p></div>
-    </div>
-    <h3 class="sub">Text-only, smallest to largest</h3>
-    <div class="compact">
-      <div class="mini"><a class="t" href="https://github.com/hotchpotch/bekko-system-one">bekko-system-one · 17M / 68M / 400M</a><p>Sentence-Transformers based, runs in the browser; second on S1MB behind Jev.</p></div>
-      <div class="mini"><a class="t" href="https://huggingface.co/SupersonicLabs/Julia-1">Julia-1 · 144M</a><p>Laya architecture on mmBERT-small; weights and inference only.</p></div>
-      <div class="mini"><a class="t" href="https://huggingface.co/convaiinnovations/laya">Laya · 322M / 421M</a><p>ModernBERT / mmBERT encoders; the most-starred open System-One repo.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/wfzyx/von">Von · 395M</a><p>ModernBERT-large, CPU-served under 15 ms; options masked from each other.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/TianyuCodings/NanoJev">NanoJev · 0.6B</a><p>Qwen3-0.6B trained on game decisions (ViZDoom, Maze, Snake).</p></div>
-      <div class="mini"><a class="t" href="https://github.com/malevrigns/agent-jev">AgentJev · 0.6B</a><p>Order-invariant candidate set encoder on Qwen3-0.6B.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/jaredpalmer/kev">Kev · 0.8B–27B</a><p>Pointer head from a decide token; best-engineered open repo.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/Mapika/decider">Decider · 2B / 4B / 35B-A3B</a><p>Letter readout, per-option-count temperature, GGUF and vLLM serving.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/togethercomputer/tev1">Tev1 · 0.8B / 4B</a><p>Letter SFT through a Together API job; uncalibrated by its own README.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/Zefan-Cai/Open-Jev">Open-Jev · 2B / 9B / 27B</a><p>Cross-encoder yes/no per option, CE plus Brier, one fitted temperature.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/allebee/jevk5">JevK5 · 4B / 9B</a><p>Letter readout with a calibrated knockout for 100+ options; #2 of 76 on JevBench v1.4.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/Contrastive-LM/CLM">CLM · 8B backbone</a><p>Two-tower contrastive heads; cleanest cacheable reference.</p></div>
-    </div>
+    <figure class="fig" aria-label="Parameter counts of the open decision models on a log scale from 17M (bekko) to 35B (clef-omni and Decider 35B-A3B total); multimodal entries start at 0.6B.">
+      <div class="lhdr"><span class="h">model</span><div class="axislab"><span style="left:0.00%">10M</span><span style="left:27.03%">100M</span><span style="left:54.07%">1B</span><span style="left:81.10%">10B</span></div><span class="h">sizes as stated</span><span class="h">inputs</span></div>
+      <ol class="ladder">
+        <li class="lgroup">Multimodal, smallest to largest</li>
+      <li class="lrow" id="m-d3"><a class="lname" href="https://huggingface.co/collections/vllm-sr/decision-30">vllm-sr Decision 3.0 (d3)</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg rng video" style="left:48.07%;width:44.25%"></span><span class="mk video" style="left:48.07%"><em class="">0.6B</em></span><span class="mk video" style="left:92.32%"><em class="">26B</em></span></div><span class="lsizes">0.6B–26B</span><span class="linputs"><span class="in I" title="image">I</span><span class="in V" title="video">V</span><span class="inote">family</span></span><p class="ldesc">Text, images, video at 2 fps (max 32 frames). #1 on the Jev Decision Index text board (66.3) and its Vision Index (71.3)<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>. Noncausal attention; trained on AMD MI325X. <a class="xref" href="#a-vllm-sr-d3">audit ↗</a></p></li>
+      <li class="lrow" id="m-liquid"><a class="lname" href="https://huggingface.co/LiquidAI/d1-omni-600M">LiquidAI d1-omni-600M, d1-3B</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg image" style="left:48.07%;width:18.90%"></span><span class="mk image" style="left:48.07%"><em class="">omni-600M</em></span><span class="mk image" style="left:66.97%"><em class="">3B</em></span></div><span class="lsizes">0.6B / 3B</span><span class="linputs"><span class="in I" title="image">I</span><span class="in A" title="audio / speech">A</span><span class="inote">A: 600M only</span></span><p class="ldesc">0.6B: text, image, speech, no video. d1-3B: text and images.</p></li>
+      <li class="lrow" id="m-decider-vision"><a class="lname" href="https://huggingface.co/Mapika/decider-2b-vision">Decider 2B vision</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk image" style="left:62.21%"></span></div><span class="lsizes">2B</span><span class="linputs"><span class="in word">vision</span></span><p class="ldesc">Letter readout with option-count temperature calibration. <a class="xref" href="#a-decider">audit ↗</a></p></li>
+      <li class="lrow" id="m-h2o"><a class="lname" href="https://huggingface.co/h2oai/h2o-lightning-4b">h2o-lightning-4b</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk image" style="left:70.35%"></span></div><span class="lsizes">4B</span><span class="linputs"><span class="in I" title="image">I</span></span><p class="ldesc">4B, text and image; #1 open-weight on JevBench 7–15 Oct (72.5), per its model card<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>. The live board has since moved (Quyet-1.0-Large leads; see leaderboards).</p></li>
+      <li class="lrow" id="m-clef"><a class="lname" href="https://huggingface.co/Cloudflare/clef-omni">Cloudflare clef · flash · omni</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg mix" style="left:79.87%;width:15.95%"></span><span class="mk unk" style="left:79.87%"><em class="">flash</em></span><span class="mk unk" style="left:92.77%"><em class="">clef</em></span><span class="mk video" style="left:95.81%"><em class="lo">omni</em></span></div><span class="lsizes">9B / 27B / 35B</span><span class="linputs"><span class="in q" title="modality not stated">?</span><span class="in I" title="image">I</span><span class="in V" title="video">V</span><span class="in A" title="audio / speech">A</span><span class="inote">I V A: omni</span></span><p class="ldesc">27B / 9B / 35B. clef-omni reads text, image, audio and video; a joint schema head scores all options of all questions. No training code. <a class="xref" href="#a-clef">audit ↗</a></p></li>
+      <li class="lrow" id="m-autotrust"><a class="lname" href="https://huggingface.co/autotrust/JEV-27B-VL">autotrust JEV-27B-VL</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk image" style="left:92.77%"></span></div><span class="lsizes">27B</span><span class="linputs"><span class="in I" title="image">I</span></span><p class="ldesc">27B, image; distilled from Jev outputs.</p></li>
+        <li class="lgroup">Text-only, smallest to largest</li>
+      <li class="lrow" id="m-bekko"><a class="lname" href="https://github.com/hotchpotch/bekko-system-one">bekko-system-one</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg " style="left:6.23%;width:37.08%"></span><span class="mk " style="left:6.23%"><em class="">17M</em></span><span class="mk " style="left:22.51%"><em class="">68M</em></span><span class="mk " style="left:43.31%"><em class="">400M</em></span></div><span class="lsizes">17M / 68M / 400M</span><span class="linputs"></span><p class="ldesc">Sentence-Transformers based, runs in the browser; second on S1MB behind Jev in the board's 30 Sep snapshot<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>. <a class="xref" href="#a-bekko">audit ↗</a></p></li>
+      <li class="lrow" id="m-julia"><a class="lname" href="https://huggingface.co/SupersonicLabs/Julia-1">Julia-1</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk " style="left:31.32%"></span></div><span class="lsizes">144M</span><span class="linputs"></span><p class="ldesc">Laya architecture on mmBERT-small; weights and inference only.</p></li>
+      <li class="lrow" id="m-laya"><a class="lname" href="https://huggingface.co/convaiinnovations/laya">Laya</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg " style="left:40.76%;width:3.15%"></span><span class="mk " style="left:40.76%"></span><span class="mk " style="left:43.91%"></span></div><span class="lsizes">322M / 421M</span><span class="linputs"></span><p class="ldesc">ModernBERT / mmBERT encoders; the most-starred open System-One repo. <a class="xref" href="#a-laya">audit ↗</a></p></li>
+      <li class="lrow" id="m-von"><a class="lname" href="https://github.com/wfzyx/von">Von</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk " style="left:43.16%"></span></div><span class="lsizes">395M</span><span class="linputs"></span><p class="ldesc">ModernBERT-large, CPU-served under 15 ms<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>; options masked from each other. <a class="xref" href="#a-von">audit ↗</a></p></li>
+      <li class="lrow" id="m-nanojev"><a class="lname" href="https://github.com/TianyuCodings/NanoJev">NanoJev</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk " style="left:48.07%"></span></div><span class="lsizes">0.6B</span><span class="linputs"></span><p class="ldesc">Qwen3-0.6B trained on game decisions (ViZDoom, Maze, Snake). <a class="xref" href="#a-nanojev">audit ↗</a></p></li>
+      <li class="lrow" id="m-agentjev"><a class="lname" href="https://github.com/malevrigns/agent-jev">AgentJev</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk " style="left:48.07%"></span></div><span class="lsizes">0.6B</span><span class="linputs"></span><p class="ldesc">Order-invariant candidate set encoder on Qwen3-0.6B. <a class="xref" href="#a-agentjev">audit ↗</a></p></li>
+      <li class="lrow" id="m-kev"><a class="lname" href="https://github.com/jaredpalmer/kev">Kev</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg rng" style="left:51.45%;width:41.32%"></span><span class="mk " style="left:51.45%"><em class="">0.8B</em></span><span class="mk " style="left:92.77%"><em class="">27B</em></span></div><span class="lsizes">0.8B–27B</span><span class="linputs"></span><p class="ldesc">Pointer head from a decide token; best-engineered open repo. <a class="xref" href="#a-kev">audit ↗</a></p></li>
+      <li class="lrow" id="m-tev1"><a class="lname" href="https://github.com/togethercomputer/tev1">Tev1</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg " style="left:51.45%;width:18.90%"></span><span class="mk " style="left:51.45%"></span><span class="mk " style="left:70.35%"></span></div><span class="lsizes">0.8B / 4B</span><span class="linputs"></span><p class="ldesc">Letter SFT through a Together API job; uncalibrated by its own README<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>. <a class="xref" href="#a-tev1">audit ↗</a></p></li>
+      <li class="lrow" id="m-decider"><a class="lname" href="https://github.com/Mapika/decider">Decider</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg " style="left:62.21%;width:33.60%"></span><span class="mk " style="left:62.21%"></span><span class="mk " style="left:70.35%"></span><span class="mk moe" style="left:95.81%"><em class="">A3B</em></span></div><span class="lsizes">2B / 4B / 35B-A3B</span><span class="linputs"></span><p class="ldesc">Letter readout, per-option-count temperature, GGUF and vLLM serving. <a class="xref" href="#a-decider">audit ↗</a></p></li>
+      <li class="lrow" id="m-open-jev"><a class="lname" href="https://github.com/Zefan-Cai/Open-Jev">Open-Jev</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg " style="left:62.21%;width:30.56%"></span><span class="mk " style="left:62.21%"></span><span class="mk " style="left:79.87%"></span><span class="mk " style="left:92.77%"></span></div><span class="lsizes">2B / 9B / 27B</span><span class="linputs"></span><p class="ldesc">Cross-encoder yes/no per option, CE plus Brier, one fitted temperature. <a class="xref" href="#a-open-jev">audit ↗</a></p></li>
+      <li class="lrow" id="m-jevk5"><a class="lname" href="https://github.com/allebee/jevk5">JevK5</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="seg " style="left:70.35%;width:9.52%"></span><span class="mk " style="left:70.35%"></span><span class="mk " style="left:79.87%"></span></div><span class="lsizes">4B / 9B</span><span class="linputs"></span><p class="ldesc">Letter readout with a calibrated knockout for 100+ options; #2 of 76 on JevBench v1.4<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>. <a class="xref" href="#a-jevk5">audit ↗</a></p></li>
+      <li class="lrow" id="m-clm"><a class="lname" href="https://github.com/Contrastive-LM/CLM">CLM</a><div class="track" aria-hidden="true"><span class="tk" style="left:0.00%"></span><span class="tk" style="left:27.03%"></span><span class="tk" style="left:54.07%"></span><span class="tk" style="left:81.10%"></span><span class="mk " style="left:78.48%"><em class="">backbone</em></span></div><span class="lsizes">8B backbone</span><span class="linputs"></span><p class="ldesc">Two-tower contrastive heads; cleanest cacheable reference. <a class="xref" href="#a-clm">audit ↗</a></p></li>
+      </ol>
+      <div class="lhdr"><span class="h"></span><div class="axislab"><span style="left:0.00%">10M</span><span style="left:27.03%">100M</span><span style="left:54.07%">1B</span><span style="left:81.10%">10B</span></div><span class="h"></span><span class="h"></span></div>
+      <figcaption class="figcap"><span class="fn">FIG. 1</span>
+        <span class="claim">Released sizes of the open models, parameters on a log scale. Dots are sizes stated by each card; a solid line joins several stated sizes, a dashed line is a stated range whose intermediate sizes are not listed; ring = mixture-of-experts at total parameters.</span>
+        <span class="keyline"><span><i class="sw" style="background:var(--fuchsia)"></i>video input</span><span><i class="sw" style="background:var(--violet)"></i>image input</span><span><i class="sw" style="background:var(--ink-muted)"></i>text only</span><span><i class="sw" style="background:var(--ink-faint)"></i>modality not stated</span><span class="inote">inputs: I image · V video · A audio/speech · ? not stated · text for all</span></span>
+        <span class="src">Source: model cards and repos linked in each row · as of 16 Oct 2026. Paper-released video weights: <a href="#p-videojev">VideoJev-4B</a>.</span></figcaption>
+    </figure>
   </section>
 
   <section class="block" id="boards">
-    <h2>Benchmarks and leaderboards</h2>
+    <h2><span class="n"></span>Benchmarks and leaderboards</h2>
+    <p class="headline">Five boards, five definitions of good.</p>
     <p class="intro">Where decision models are ranked. Screenshots taken on 16 October 2026, except jev-bench, which shows the board's own chart; click an image for the live board.</p>
+    <figure class="fig" style="margin-bottom:30px">
+      <div class="t1wrap" role="region" aria-label="Boards at a glance" tabindex="0">
+      <table class="t1">
+        <thead><tr><th>Board</th><th>Version · size</th><th>Measures</th><th>Leader, as stated</th><th>Jev, as stated</th></tr></thead>
+        <tbody>
+          <tr><td class="nm"><a href="#b-decision-index">Decision Index</a></td><td class="mu">v0.3.2 · 168 models</td><td class="mu">37 public benchmarks + private tests · text and vision boards</td><td>vLLM-SR d3 27B⁴ <span class="sc">66.3 full score</span></td><td class="jev">Jev 1.14 <span class="sc">61.5 full score</span></td></tr>
+          <tr><td class="nm"><a href="#b-decidebench">DecideBench</a></td><td class="mu">v1.1 · 400 decisions</td><td class="mu">accuracy · cost per M tasks · latency</td><td class="mu">overall leader: a chat LLM¹</td><td class="jev">JEV <span class="sc">98.0% acc</span><span class="mu" style="font-size:12px">leads the decision models</span></td></tr>
+          <tr><td class="nm"><a href="#b-s1mb">System One Mosaic Benchmark</a></td><td class="mu">165 models · 137 benchmarks</td><td class="mu">text only · Borda score over Noul, Choice, Score</td><td>Superion S1 <span class="sc">91.21 Borda</span></td><td class="jev">Jev 1.14 Preview² <span class="sc">81.85 Borda</span></td></tr>
+          <tr><td class="nm"><a href="#b-jevbench">JevBench</a></td><td class="mu">v1.7.46 · 162 ranked</td><td class="mu">intelligence · calibration · cost · latency</td><td>Quyet-1.0-Large <span class="sc">81.7 capability</span></td><td class="jev">Jev 1.13.0 <span class="sc">77.1 capability</span></td></tr>
+          <tr><td class="nm"><a href="#b-jev-bench">jev-bench</a></td><td class="mu">v0.1.1 · 22,773 records</td><td class="mu">accuracy vs calibration error, human labels</td><td class="mu">open readout-fine-tuned models³</td><td class="jev">Jev 1.13.0 <span class="sc">0.733 acc · 0.113 ECE</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <figcaption class="figcap"><span class="fn">TABLE 1</span><span class="claim">Each board uses its own metric and test set: compare within a row, never down a column.</span>
+        <span class="fnotes">¹ DecideBench ranks chat LLMs (DeepSeek-V4-Flash, 99.8%) above all decision models. ² rank 16 on the live board. ³ readout-fine-tuned open models beat Jev on both accuracy and calibration error. ⁴ size as written on the board; the d3 model card lists 0.6B–26B.</span>
+        <span class="src">Source: the five live boards · snapshots 16 Oct 2026 (jev-bench chart 2 Oct)</span></figcaption>
+    </figure>
     <div class="shots">
-      <figure class="shot"><a class="img" href="https://huggingface.co/spaces/multimodalart/jev-decision-index"><img src="boards/decision-index.jpg" alt="Decision Index 0.3.2 bar chart of the top open decision models by full score" loading="lazy" width="1200" height="983"></a>
+      <figure class="shot" id="b-decision-index"><a class="img" href="https://huggingface.co/spaces/multimodalart/jev-decision-index"><img src="boards/decision-index.jpg" alt="Decision Index 0.3.2 bar chart of the top open decision models by full score" loading="lazy" decoding="async" width="1200" height="983"></a>
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/multimodalart/jev-decision-index">Decision Index</a><span class="stat">v0.3.2 · 168 models</span></div>
         <p>The main board for open Jev reproductions: 37 public benchmarks plus private tests, with separate text and vision boards. Top on 16 Oct: vLLM-SR d3 27B (66.3); Jev 1.14 at 61.5.</p></figcaption></figure>
-      <figure class="shot"><a class="img" href="https://huggingface.co/spaces/choyiny/decidebench-leaderboard"><img src="boards/decidebench.jpg" alt="DecideBench v1.1 table of accuracy, cost per million tasks and latency" loading="lazy" width="1200" height="908"></a>
+      <figure class="shot" id="b-decidebench"><a class="img" href="https://huggingface.co/spaces/choyiny/decidebench-leaderboard"><img src="boards/decidebench.jpg" alt="DecideBench v1.1 table of accuracy, cost per million tasks and latency" loading="lazy" decoding="async" width="1200" height="908"></a>
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/choyiny/decidebench-leaderboard">DecideBench</a><span class="stat">v1.1 · 400 decisions</span></div>
         <p>Accuracy, cost per million tasks and latency, decision models next to chat LLMs. JEV leads the decision models at 98.0%. <a href="https://github.com/choyiny/decidebench">Code</a></p></figcaption></figure>
-      <figure class="shot"><a class="img" href="https://huggingface.co/spaces/hotchpotch/S1MB-leaderboard"><img src="boards/s1mb.jpg" alt="System One Mosaic Benchmark overall leaderboard by Borda score" loading="lazy" width="1200" height="1083"></a>
+      <figure class="shot" id="b-s1mb"><a class="img" href="https://huggingface.co/spaces/hotchpotch/S1MB-leaderboard"><img src="boards/s1mb.jpg" alt="System One Mosaic Benchmark overall leaderboard by Borda score" loading="lazy" decoding="async" width="1200" height="1083"></a>
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/spaces/hotchpotch/S1MB-leaderboard">System One Mosaic Benchmark</a><span class="stat">165 models · 137 benchmarks</span></div>
         <p>Text only, ranked by Borda score across Noul, Choice and Score tasks. Superion S1 leads (91.21). <a href="https://huggingface.co/blog/hotchpotch/system-one-mosaic-benchmark">Write-up</a></p></figcaption></figure>
-      <figure class="shot"><a class="img" href="https://benchmarkheaven.com/jev-models"><img src="boards/jevbench.jpg" alt="JevBench capability ranking of open-weight decision models, Quyet-1.0-Large first at 81.7" loading="lazy" width="1200" height="904"></a>
+      <figure class="shot" id="b-jevbench"><a class="img" href="https://benchmarkheaven.com/jev-models"><img src="boards/jevbench.jpg" alt="JevBench capability ranking of open-weight decision models, Quyet-1.0-Large first at 81.7" loading="lazy" decoding="async" width="1200" height="904"></a>
         <figcaption><div class="top"><a class="name" href="https://benchmarkheaven.com/jev-models">JevBench</a><span class="stat">board v1.7.46 · 162 ranked</span></div>
         <p>Intelligence, calibration, cost and latency, run independently of TypeSafe. The capability score averages intelligence and calibration over systems within 2× Jev's cost and latency. Quyet-1.0-Large leads (81.7); Jev 1.13.0 scores 77.1 as the reference.</p></figcaption></figure>
-      <figure class="shot"><a class="img" href="https://huggingface.co/datasets/Praveenrajus/jev-bench#leaderboard"><img src="boards/jev-bench.jpg" alt="jev-bench chart of every model: macro accuracy against calibration error, Jev 1.13.0 marked" loading="lazy" width="1200" height="698"></a>
+      <figure class="shot" id="b-jev-bench"><a class="img" href="https://huggingface.co/datasets/Praveenrajus/jev-bench#leaderboard"><img src="boards/jev-bench.jpg" alt="jev-bench chart of every model: macro accuracy against calibration error, Jev 1.13.0 marked" loading="lazy" decoding="async" width="1200" height="698"></a>
         <figcaption><div class="top"><a class="name" href="https://huggingface.co/datasets/Praveenrajus/jev-bench#leaderboard">jev-bench</a><span class="stat">v0.1.1 · 22,773 test records</span></div>
         <p>Every model on the same human-labelled test set, accuracy against calibration error. Jev 1.13.0: 0.733 accuracy, ECE 0.113; readout-fine-tuned open models beat it on both. Chart from the dataset card (2 Oct).</p></figcaption></figure>
     </div>
+
   </section>
 
   <section class="block" id="hubs">
-    <h2>Where to browse</h2>
+    <h2><span class="n"></span>Where to browse</h2>
+    <p class="headline">Unranked collections; scores there are self-reported.</p>
     <p class="intro">Places that collect decision models and papers without ranking them.</p>
     <div class="boards">
-      <div class="board"><div class="top"><a class="name" href="https://huggingface.co/models?other=decision-model">The decision-model shelf</a><span class="stat">1,981 models</span></div><p><span class="src-tag">Hugging Face tag</span> Every model its authors tagged as a decision model.</p></div>
-      <div class="board"><div class="top"><a class="name" href="https://huggingface.co/models?search=jev&amp;sort=likes">Everything named Jev</a><span class="stat">~540 repos</span></div><p><span class="src-tag">Hugging Face search</span> Repos with "jev" in the name, most liked first.</p></div>
-      <div class="board"><div class="top"><a class="name" href="https://systemonemodels.ai/">System One Models</a><span class="stat">~21 models</span></div><p><span class="src-tag">systemonemodels.ai</span> A directory of decision models with self-reported scores, which are not comparable across models.</p></div>
-      <div class="board"><div class="top"><a class="name" href="https://arxiv.org/search/?query=Jev&amp;searchtype=all">The Jev paper trail</a><span class="stat">~131 papers</span></div><p><span class="src-tag">arXiv search</span> Papers mentioning Jev, 19 Sep – 14 Oct 2026.</p></div>
+      <div class="board" id="h-hf"><div class="top"><a class="name" href="https://huggingface.co/models?other=decision-model">The decision-model shelf</a><span class="stat">1,981 models</span></div><p><span class="src-tag">Hugging Face tag</span> Every model its authors tagged as a decision model.</p></div>
+      <div class="board" id="h-jev"><div class="top"><a class="name" href="https://huggingface.co/models?search=jev&amp;sort=likes">Everything named Jev</a><span class="stat">~540 repos</span></div><p><span class="src-tag">Hugging Face search</span> Repos with "jev" in the name, most liked first.</p></div>
+      <div class="board" id="h-som"><div class="top"><a class="name" href="https://systemonemodels.ai/">System One Models</a><span class="stat">~21 models</span></div><p><span class="src-tag">systemonemodels.ai</span> A directory of decision models with self-reported scores<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>, which are not comparable across models.</p></div>
+      <div class="board" id="h-arxiv"><div class="top"><a class="name" href="https://arxiv.org/search/?query=Jev&amp;searchtype=all">The Jev paper trail</a><span class="stat">~131 papers</span></div><p><span class="src-tag">arXiv search</span> Papers mentioning Jev, 19 Sep – 14 Oct 2026.</p></div>
     </div>
   </section>
 
   <section class="block" id="audit">
-    <h2>Code audit</h2>
-    <p class="intro">We read the code of about 30 implementations, all scored the same way. The first question for any design: are the request and the options encoded together in one sequence (joint), or separately (cacheable options)? Stars and downloads as of 15 Oct 2026.</p>
-    <div class="table-wrap">
-      <table class="audit">
-        <thead><tr><th>Repo</th><th>Encoding</th><th>Decision head</th><th>None</th><th>Max options</th><th style="text-align:right">Stars</th><th>Take-away</th></tr></thead>
+    <h2><span class="n"></span>Code audit</h2>
+    <p class="headline">22 of 27 audited repos encode request and options jointly.</p>
+    <p class="intro">We read the code of 27 implementations, all scored the same way. The first question for any design: are the request and the options encoded together in one sequence (joint), or separately (cacheable options)? Stars as of 15 Oct 2026.</p>
+    <figure class="fig" style="margin-top:20px">
+      <div class="strip"><div class="run" role="group" aria-label="Text, decision heads on LLM backbones"><span class="rl">LLM heads · 5</span><span class="sq"><a class="sep nonex" href="#a-jeva" title="Jeva · separate · none: gate" aria-label="Jeva, separate, none: gate"></a><a class="" href="#a-kev" title="Kev · joint · none: no" aria-label="Kev, joint, none: no"></a><a class="" href="#a-nanojev" title="NanoJev · joint · none: no" aria-label="NanoJev, joint, none: no"></a><a class="" href="#a-decider" title="Decider · joint · none: no" aria-label="Decider, joint, none: no"></a><a class="" href="#a-agentjev" title="AgentJev · joint · none: no" aria-label="AgentJev, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Text, encoder models"><span class="rl">encoders · 7</span><span class="sq"><a class="" href="#a-laya" title="Laya · joint · none: untrained" aria-label="Laya, joint, none: untrained"></a><a class="" href="#a-gliner" title="GLiNER2.5-Decide · joint · none: threshold" aria-label="GLiNER2.5-Decide, joint, none: threshold"></a><a class="" href="#a-von" title="Von · joint · none: no" aria-label="Von, joint, none: no"></a><a class="shared" href="#a-bekko" title="Bekko · shared prefix · none: no" aria-label="Bekko, shared prefix, none: no"></a><a class="nonex" href="#a-chinese-jev" title="Chinese-Jev · joint · none: act head" aria-label="Chinese-Jev, joint, none: act head"></a><a class="sep nonex" href="#a-verdict" title="Verdict · separate · none: conformal" aria-label="Verdict, separate, none: conformal"></a><a class="" href="#a-bongard" title="Bongard · joint · none: no" aria-label="Bongard, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Text, recipes and two-tower models"><span class="rl">recipes · 9</span><span class="sq"><a class="sep" href="#a-clm" title="CLM · separate · none: no" aria-label="CLM, separate, none: no"></a><a class="" href="#a-semif" title="SemIf · joint · none: no" aria-label="SemIf, joint, none: no"></a><a class="" href="#a-anyjev" title="AnyJev · joint · none: no" aria-label="AnyJev, joint, none: no"></a><a class="" href="#a-open-jev" title="Open-Jev · joint · none: no" aria-label="Open-Jev, joint, none: no"></a><a class="nonex" href="#a-startlux" title="StartLux · joint · none: option" aria-label="StartLux, joint, none: option"></a><a class="" href="#a-tev1" title="Tev1 · joint · none: no" aria-label="Tev1, joint, none: no"></a><a class="" href="#a-jevk5" title="JevK5 · joint · none: no" aria-label="JevK5, joint, none: no"></a><a class="" href="#a-fundm" title="FunDM · joint · none: no" aria-label="FunDM, joint, none: no"></a><a class="" href="#a-sii" title="SII-Decision · joint · none: no" aria-label="SII-Decision, joint, none: no"></a></span></div><div class="run" role="group" aria-label="Vision and video"><span class="rl">vision/video · 6</span><span class="sq"><a class="" href="#a-videojev" title="VideoJev · joint · none: no" aria-label="VideoJev, joint, none: no"></a><a class="shared nonex" href="#a-omnijev" title="OmniJev · shared prefix · none: abstain" aria-label="OmniJev, shared prefix, none: abstain"></a><a class="" href="#a-omnimed" title="OmniMed-Jev · joint · none: no" aria-label="OmniMed-Jev, joint, none: no"></a><a class="" href="#a-clef" title="Clef · joint · none: no" aria-label="Clef, joint, none: no"></a><a class="" href="#a-visual-jev" title="Visual Jev · joint · none: experimental" aria-label="Visual Jev, joint, none: experimental"></a><a class="" href="#a-vllm-sr-d3" title="vllm-sr d3 · joint · none: no" aria-label="vllm-sr d3, joint, none: no"></a></span></div></div>
+      <div class="enckey">
+        <span class="k"><i></i>joint <b>22</b> · request and options in one sequence</span>
+        <span class="k"><i class="shared"></i>shared prefix <b>2</b> · as labelled in the table</span>
+        <span class="k"><i class="sep"></i>separate <b>3</b> · options encoded without the request, so they can be cached</span>
+        <span class="k"><i class="nonex"></i>explicit "none" <b>5</b> · gate, act head, conformal, option, abstain</span>
+      </div>
+      <figcaption class="figcap"><span class="fn">FIG. 2</span><span class="claim">One square per repo in the table below, in table order (grouped, not ranked); click a square to jump to its row. The audited set, not a census.</span>
+        <span class="src">Source: the table below · code read 15–16 Oct 2026</span></figcaption>
+    </figure>
+    <div class="table-wrap" role="region" aria-label="Code audit table" tabindex="0">
+      <table class="audit" id="audit-table">
+        <thead><tr><th>Repo</th><th>Encoding</th><th>Decision head</th><th>None</th><th>Max options</th><th style="text-align:right">Stars · 15 Oct</th><th>Take-away</th></tr></thead>
         <tbody>
-          <tr class="group"><td colspan="7">Text, decision heads on LLM backbones</td></tr>
-          <tr><td class="rname"><a href="https://github.com/LiQiiiii/Jeva">Jeva</a></td><td><span class="tag sep">separate</span></td><td>Request vector reads the option set (attention), then dot product</td><td><span class="tag yes">gate</span></td><td>2,048 tested</td><td class="n">76</td><td>Only design built for cacheable options; head is 470 lines of plain PyTorch</td></tr>
-          <tr><td class="rname"><a href="https://github.com/jaredpalmer/kev">Kev</a></td><td><span class="tag joint">joint</span></td><td>Decide-token pointer over option tokens</td><td><span class="tag no">no</span></td><td>255</td><td class="n">9,178</td><td>Best engineering (447 tests, ROCm); notes record that isolation and head width did not help</td></tr>
-          <tr><td class="rname"><a href="https://github.com/TianyuCodings/NanoJev">NanoJev</a></td><td><span class="tag joint">joint</span></td><td>Per-option scalar + set attention</td><td><span class="tag no">no</span></td><td>255</td><td class="n">2,552</td><td>Proper-score RL estimator, found no better than CE</td></tr>
-          <tr><td class="rname"><a href="https://github.com/Mapika/decider">Decider</a></td><td><span class="tag joint">joint</span></td><td>Letter-token logits</td><td><span class="tag no">no</span></td><td>255</td><td class="n">1,147</td><td>Best calibration practice: T(n) = a + b·ln n</td></tr>
-          <tr><td class="rname"><a href="https://github.com/malevrigns/agent-jev">AgentJev</a></td><td><span class="tag joint">joint</span></td><td>2-layer set transformer over candidates</td><td><span class="tag no">no</span></td><td>255</td><td class="n">386</td><td>Clean candidate set encoder (~60 lines)</td></tr>
-          <tr class="group"><td colspan="7">Text, encoder models</td></tr>
-          <tr><td class="rname"><a href="https://github.com/NandhaKishorM/laya">Laya</a></td><td><span class="tag joint">joint</span></td><td>2-layer head, MLP at each option marker</td><td><span class="tag no">untrained</span></td><td>32</td><td class="n">33,022</td><td>Huge community; "RLCD" loss and per-K temperatures; shipped ECE 0.57</td></tr>
-          <tr><td class="rname"><a href="https://github.com/fastino-ai/GLiNER2">GLiNER2.5-Decide</a></td><td><span class="tag joint">joint</span></td><td>MLP per label token</td><td><span class="tag no">threshold</span></td><td>512 positions</td><td class="n">2,374</td><td>Excellent engineering; options are tokens in a 512-position encoder</td></tr>
-          <tr><td class="rname"><a href="https://github.com/wfzyx/von">Von</a></td><td><span class="tag joint">joint</span></td><td>MLP at option markers; options masked from each other</td><td><span class="tag no">no</span></td><td>8K tokens</td><td class="n">906</td><td>Order-invariant by construction; CE + 0.5·Brier</td></tr>
-          <tr><td class="rname"><a href="https://github.com/hotchpotch/bekko-system-one">Bekko</a></td><td><span class="tag joint">shared prefix</span></td><td>Linear + optional set attention</td><td><span class="tag no">no</span></td><td>no cap</td><td class="n">37</td><td>Cleanest small code; set head marked experimental</td></tr>
-          <tr><td class="rname"><a href="https://github.com/gulucaptain/Chinese-Jev">Chinese-Jev</a></td><td><span class="tag joint">joint</span></td><td>Laya head</td><td><span class="tag yes">act head</span></td><td>32</td><td class="n">16</td><td>Compact RLCD + DDP</td></tr>
-          <tr><td class="rname"><a href="https://github.com/Manavarya09/verdict">Verdict</a></td><td><span class="tag sep">separate</span></td><td>Cosine or logistic regression</td><td><span class="tag yes">conformal</span></td><td>no cap</td><td class="n">3</td><td>Right towers, no real head</td></tr>
-          <tr><td class="rname"><a href="https://github.com/AgentBull/bongard">Bongard</a></td><td><span class="tag joint">joint</span></td><td>Bilinear candidate × decision token</td><td><span class="tag no">no</span></td><td>—</td><td class="n">3</td><td>7.5B, causal, no tests</td></tr>
-          <tr class="group"><td colspan="7">Text, recipes and two-tower models</td></tr>
-          <tr><td class="rname"><a href="https://github.com/Contrastive-LM/CLM">CLM</a></td><td><span class="tag sep">separate</span></td><td>Cosine of two MLP heads</td><td><span class="tag no">no</span></td><td>no cap</td><td class="n">3,033</td><td>Clean two-tower; loses to joint heads (44.3% vs ~75%)</td></tr>
-          <tr><td class="rname"><a href="https://github.com/TheoLeeCJ/SemIf-OpenJev">SemIf</a></td><td><span class="tag joint">joint</span></td><td>Letter logits, no training</td><td><span class="tag no">no</span></td><td>16</td><td class="n">4,829</td><td>Interface demo</td></tr>
-          <tr><td class="rname"><a href="https://github.com/nokia-applied-research/AnyJev">AnyJev</a></td><td><span class="tag joint">joint</span></td><td>Letter logits, rotation averaging</td><td><span class="tag no">no</span></td><td>26</td><td class="n">1,276</td><td>Quantifies order bias</td></tr>
-          <tr><td class="rname"><a href="https://github.com/Zefan-Cai/Open-Jev">Open-Jev</a></td><td><span class="tag joint">joint</span></td><td>Yes/no scalar per option</td><td><span class="tag no">no</span></td><td>K passes</td><td class="n">415</td><td>CE + Brier, one temperature</td></tr>
-          <tr><td class="rname"><a href="https://github.com/StartLuxLabs/StartLux-Decision">StartLux</a></td><td><span class="tag joint">joint</span></td><td>Letter logits, bidirectional prompt</td><td><span class="tag yes">option</span></td><td>26 + knockout</td><td class="n">415</td><td>Explicit "none" costs no accuracy</td></tr>
-          <tr><td class="rname"><a href="https://github.com/togethercomputer/tev1">Tev1</a></td><td><span class="tag joint">joint</span></td><td>Letter SFT</td><td><span class="tag no">no</span></td><td>24</td><td class="n">236</td><td>A data recipe</td></tr>
-          <tr><td class="rname"><a href="https://github.com/allebee/jevk5">JevK5</a></td><td><span class="tag joint">joint</span></td><td>Letter logits + knockout</td><td><span class="tag no">no</span></td><td>16 per pass</td><td class="n">155</td><td>Only calibrated recipe measured at 151 options</td></tr>
-          <tr><td class="rname"><a href="https://github.com/Ujjawal-K-Panchal/FunDM">FunDM</a></td><td><span class="tag joint">joint</span></td><td>One-layer set transformer over option states</td><td><span class="tag no">no</span></td><td>10 tested</td><td class="n">0</td><td>Most liftable set head (~25 lines)</td></tr>
-          <tr><td class="rname"><a href="https://github.com/amazingljy1206/SII-Decision">SII-Decision</a></td><td><span class="tag joint">joint</span></td><td>First-token logits</td><td><span class="tag no">no</span></td><td>255</td><td class="n">3</td><td>Self-distillation recipe</td></tr>
-          <tr class="group"><td colspan="7">Vision and video</td></tr>
-          <tr><td class="rname"><a href="https://github.com/MCG-NJU/VideoJev">VideoJev</a></td><td><span class="tag joint">joint</span></td><td>Decide-token pointer over timestamp options</td><td><span class="tag no">no</span></td><td>1 per 2 frames</td><td class="n">123</td><td>Best video evidence; soft-IoU +4.6 mIoU; CUDA-only kernels</td></tr>
-          <tr><td class="rname"><a href="https://github.com/tinnel123666888/OmniJev">OmniJev</a></td><td><span class="tag joint">shared prefix</span></td><td>FiLM-gated scorer per option</td><td><span class="tag yes">abstain</span></td><td>—</td><td class="n">163</td><td>Proper-score losses; options fully isolated</td></tr>
-          <tr><td class="rname"><a href="https://github.com/lytang63/OmniMed-Jev">OmniMed-Jev</a></td><td><span class="tag joint">joint</span></td><td>Linear + bilinear + set attention</td><td><span class="tag no">no</span></td><td>any</td><td class="n">1</td><td>Query-conditioned set head (~70 lines)</td></tr>
-          <tr><td class="rname"><a href="https://huggingface.co/Cloudflare/clef-omni">Clef</a></td><td><span class="tag joint">joint</span></td><td>Options route evidence from a memory, questions attend to each other</td><td><span class="tag no">no</span></td><td>—</td><td class="n">HF only</td><td>Richest head; no training code, no ablation</td></tr>
-          <tr><td class="rname"><a href="https://github.com/guanxuyu-sv/Visual-Jev">Visual Jev</a></td><td><span class="tag joint">joint</span></td><td>LM-head letters</td><td><span class="tag no">experimental</span></td><td>16</td><td class="n">46</td><td>Typed head tied the LM head</td></tr>
-          <tr><td class="rname"><a href="https://github.com/vllm-project/semantic-router">vllm-sr d3</a></td><td><span class="tag joint">joint</span></td><td>255-code readout, noncausal</td><td><span class="tag no">no</span></td><td>255</td><td class="n">6,180</td><td>Only one verified on ROCm; no head training code</td></tr>
+          <tr class="group" id="a-g-LLM-heads"><td colspan="7">Text, decision heads on LLM backbones<span class="cnt">· 5</span></td></tr>
+          <tr id="a-jeva"><td class="rname"><a href="https://github.com/LiQiiiii/Jeva">Jeva</a></td><td><span class="tag sep">separate</span></td><td>Request vector reads the option set (attention), then dot product</td><td><span class="tag yes">gate</span></td><td>2,048 tested</td><td class="n">76</td><td>Only design built for cacheable options; head is 470 lines of plain PyTorch</td></tr>
+          <tr id="a-kev"><td class="rname"><a href="https://github.com/jaredpalmer/kev">Kev</a></td><td><span class="tag joint">joint</span></td><td>Decide-token pointer over option tokens</td><td><span class="tag no">no</span></td><td>255</td><td class="n">9,178</td><td>Best engineering (447 tests, ROCm); notes record that isolation and head width did not help<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></td></tr>
+          <tr id="a-nanojev"><td class="rname"><a href="https://github.com/TianyuCodings/NanoJev">NanoJev</a></td><td><span class="tag joint">joint</span></td><td>Per-option scalar + set attention</td><td><span class="tag no">no</span></td><td>255</td><td class="n">2,552</td><td>Proper-score RL estimator, found no better than CE<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></td></tr>
+          <tr id="a-decider"><td class="rname"><a href="https://github.com/Mapika/decider">Decider</a></td><td><span class="tag joint">joint</span></td><td>Letter-token logits</td><td><span class="tag no">no</span></td><td>255</td><td class="n">1,147</td><td>Best calibration practice: T(n) = a + b·ln n</td></tr>
+          <tr id="a-agentjev"><td class="rname"><a href="https://github.com/malevrigns/agent-jev">AgentJev</a></td><td><span class="tag joint">joint</span></td><td>2-layer set transformer over candidates</td><td><span class="tag no">no</span></td><td>255</td><td class="n">386</td><td>Clean candidate set encoder (~60 lines)</td></tr>
+          <tr class="group" id="a-g-encoders"><td colspan="7">Text, encoder models<span class="cnt">· 7</span></td></tr>
+          <tr id="a-laya"><td class="rname"><a href="https://github.com/NandhaKishorM/laya">Laya</a></td><td><span class="tag joint">joint</span></td><td>2-layer head, MLP at each option marker</td><td><span class="tag other">untrained</span></td><td>32</td><td class="n">33,022</td><td>Huge community; "RLCD" loss and per-K temperatures; shipped ECE 0.57<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></td></tr>
+          <tr id="a-gliner"><td class="rname"><a href="https://github.com/fastino-ai/GLiNER2">GLiNER2.5-Decide</a></td><td><span class="tag joint">joint</span></td><td>MLP per label token</td><td><span class="tag other">threshold</span></td><td>512 positions</td><td class="n">2,374</td><td>Excellent engineering; options are tokens in a 512-position encoder</td></tr>
+          <tr id="a-von"><td class="rname"><a href="https://github.com/wfzyx/von">Von</a></td><td><span class="tag joint">joint</span></td><td>MLP at option markers; options masked from each other</td><td><span class="tag no">no</span></td><td>8K tokens</td><td class="n">906</td><td>Order-invariant by construction; CE + 0.5·Brier</td></tr>
+          <tr id="a-bekko"><td class="rname"><a href="https://github.com/hotchpotch/bekko-system-one">Bekko</a></td><td><span class="tag shared">shared prefix</span></td><td>Linear + optional set attention</td><td><span class="tag no">no</span></td><td>no cap</td><td class="n">37</td><td>Cleanest small code; set head marked experimental</td></tr>
+          <tr id="a-chinese-jev"><td class="rname"><a href="https://github.com/gulucaptain/Chinese-Jev">Chinese-Jev</a></td><td><span class="tag joint">joint</span></td><td>Laya head</td><td><span class="tag yes">act head</span></td><td>32</td><td class="n">16</td><td>Compact RLCD + DDP</td></tr>
+          <tr id="a-verdict"><td class="rname"><a href="https://github.com/Manavarya09/verdict">Verdict</a></td><td><span class="tag sep">separate</span></td><td>Cosine or logistic regression</td><td><span class="tag yes">conformal</span></td><td>no cap</td><td class="n">3</td><td>Right towers, no real head</td></tr>
+          <tr id="a-bongard"><td class="rname"><a href="https://github.com/AgentBull/bongard">Bongard</a></td><td><span class="tag joint">joint</span></td><td>Bilinear candidate × decision token</td><td><span class="tag no">no</span></td><td>—</td><td class="n">3</td><td>7.5B, causal, no tests</td></tr>
+          <tr class="group" id="a-g-recipes"><td colspan="7">Text, recipes and two-tower models<span class="cnt">· 9</span></td></tr>
+          <tr id="a-clm"><td class="rname"><a href="https://github.com/Contrastive-LM/CLM">CLM</a></td><td><span class="tag sep">separate</span></td><td>Cosine of two MLP heads</td><td><span class="tag no">no</span></td><td>no cap</td><td class="n">3,033</td><td>Clean two-tower; loses to joint heads (44.3% vs ~75%, FunDM's audit)</td></tr>
+          <tr id="a-semif"><td class="rname"><a href="https://github.com/TheoLeeCJ/SemIf-OpenJev">SemIf</a></td><td><span class="tag joint">joint</span></td><td>Letter logits, no training</td><td><span class="tag no">no</span></td><td>16</td><td class="n">4,829</td><td>Interface demo</td></tr>
+          <tr id="a-anyjev"><td class="rname"><a href="https://github.com/nokia-applied-research/AnyJev">AnyJev</a></td><td><span class="tag joint">joint</span></td><td>Letter logits, rotation averaging</td><td><span class="tag no">no</span></td><td>26</td><td class="n">1,276</td><td>Quantifies order bias <a class="xref" href="#ev-order">→ evidence</a></td></tr>
+          <tr id="a-open-jev"><td class="rname"><a href="https://github.com/Zefan-Cai/Open-Jev">Open-Jev</a></td><td><span class="tag joint">joint</span></td><td>Yes/no scalar per option</td><td><span class="tag no">no</span></td><td>K passes</td><td class="n">415</td><td>CE + Brier, one temperature</td></tr>
+          <tr id="a-startlux"><td class="rname"><a href="https://github.com/StartLuxLabs/StartLux-Decision">StartLux</a></td><td><span class="tag joint">joint</span></td><td>Letter logits, bidirectional prompt</td><td><span class="tag yes">option</span></td><td>26 + knockout</td><td class="n">415</td><td>Explicit "none" costs no accuracy <a class="xref" href="#ev-none">→ evidence</a></td></tr>
+          <tr id="a-tev1"><td class="rname"><a href="https://github.com/togethercomputer/tev1">Tev1</a></td><td><span class="tag joint">joint</span></td><td>Letter SFT</td><td><span class="tag no">no</span></td><td>24</td><td class="n">236</td><td>A data recipe</td></tr>
+          <tr id="a-jevk5"><td class="rname"><a href="https://github.com/allebee/jevk5">JevK5</a></td><td><span class="tag joint">joint</span></td><td>Letter logits + knockout</td><td><span class="tag no">no</span></td><td>16 per pass</td><td class="n">155</td><td>Only calibrated recipe measured at 151 options</td></tr>
+          <tr id="a-fundm"><td class="rname"><a href="https://github.com/Ujjawal-K-Panchal/FunDM">FunDM</a></td><td><span class="tag joint">joint</span></td><td>One-layer set transformer over option states</td><td><span class="tag no">no</span></td><td>10 tested</td><td class="n">0</td><td>Most liftable set head (~25 lines) <a class="xref" href="#ev-set">→ evidence</a></td></tr>
+          <tr id="a-sii"><td class="rname"><a href="https://github.com/amazingljy1206/SII-Decision">SII-Decision</a></td><td><span class="tag joint">joint</span></td><td>First-token logits</td><td><span class="tag no">no</span></td><td>255</td><td class="n">3</td><td>Self-distillation recipe</td></tr>
+          <tr class="group" id="a-g-vision"><td colspan="7">Vision and video<span class="cnt">· 6</span></td></tr>
+          <tr id="a-videojev"><td class="rname"><a href="https://github.com/MCG-NJU/VideoJev">VideoJev</a></td><td><span class="tag joint">joint</span></td><td>Decide-token pointer over timestamp options</td><td><span class="tag no">no</span></td><td>1 per 2 frames</td><td class="n">123</td><td>Best video evidence; soft-IoU +4.6 mIoU; CUDA-only kernels <a class="xref" href="#ev-softiou">→ evidence</a></td></tr>
+          <tr id="a-omnijev"><td class="rname"><a href="https://github.com/tinnel123666888/OmniJev">OmniJev</a></td><td><span class="tag shared">shared prefix</span></td><td>FiLM-gated scorer per option</td><td><span class="tag yes">abstain</span></td><td>—</td><td class="n">163</td><td>Proper-score losses; options fully isolated</td></tr>
+          <tr id="a-omnimed"><td class="rname"><a href="https://github.com/lytang63/OmniMed-Jev">OmniMed-Jev</a></td><td><span class="tag joint">joint</span></td><td>Linear + bilinear + set attention</td><td><span class="tag no">no</span></td><td>any</td><td class="n">1</td><td>Query-conditioned set head (~70 lines)</td></tr>
+          <tr id="a-clef"><td class="rname"><a href="https://huggingface.co/Cloudflare/clef-omni">Clef</a></td><td><span class="tag joint">joint</span></td><td>Options route evidence from a memory, questions attend to each other</td><td><span class="tag no">no</span></td><td>—</td><td class="n">HF only</td><td>Richest head; no training code, no ablation</td></tr>
+          <tr id="a-visual-jev"><td class="rname"><a href="https://github.com/guanxuyu-sv/Visual-Jev">Visual Jev</a></td><td><span class="tag joint">joint</span></td><td>LM-head letters</td><td><span class="tag other">experimental</span></td><td>16</td><td class="n">46</td><td>Typed head tied the LM head</td></tr>
+          <tr id="a-vllm-sr-d3"><td class="rname"><a href="https://github.com/vllm-project/semantic-router">vllm-sr d3</a></td><td><span class="tag joint">joint</span></td><td>255-code readout, noncausal</td><td><span class="tag no">no</span></td><td>255</td><td class="n">6,180</td><td>Only one verified on ROCm; no head training code</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="legend"><span><span class="tag sep">separate</span> options encoded without the request, so they can be cached</span><span><span class="tag joint">joint</span> request and options in one sequence</span></div>
+    <div class="legend"><span><span class="tag sep">separate</span> options encoded without the request, so they can be cached</span><span><span class="tag joint">joint</span> request and options in one sequence</span><span><span class="tag shared">shared prefix</span> as labelled in the table</span></div>
   </section>
 
   <section class="block" id="evidence">
-    <h2>What the evidence says</h2>
+    <h2><span class="n"></span>What the evidence says</h2>
+    <p class="headline">Eight measured comparisons, each on its own metric.</p>
     <p class="intro">No repository ablates its own head design. These are the measurements that exist, each from the cited source.</p>
+    <p class="evnote">each plot: own metric, own axis from zero · ○ before ● after · dashed = README<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></p>
     <div class="evidence">
-      <div class="ev"><div class="big">+18<small>MMLU points</small></div><div><h4>Joint beats separate encoding</h4><p>Putting the options into the request lifts MMLU from 56.5 to 74.6. FunDM finds +16–17 MMLU-Pro for joint over option-only encoding.</p><a class="src" href="https://arxiv.org/abs/2610.11316">MetaEncoder, Table 3</a></div></div>
-      <div class="ev"><div class="big">+6.0<small>LoRA vs head</small></div><div><h4>The backbone matters more than the head</h4><p>Training only the head: 78.9. LoRA with the head frozen: 84.9. LoRA ranks 16–128 score about the same.</p><a class="src" href="https://arxiv.org/abs/2610.17205">Releasing the Inner Jev, §5.4</a></div></div>
-      <div class="ev"><div class="big">+0.4–2.1<small>set layer</small></div><div><h4>Set interaction adds a little</h4><p>A set-attention layer on top of joint states. Bidirectional attention in the prompt: up to +2.4 Decision Index (StartLux).</p><a class="src" href="https://arxiv.org/abs/2610.17175">FunDM, Table 4</a></div></div>
-      <div class="ev"><div class="big">+4.6<small>mIoU</small></div><div><h4>Soft-IoU for grounding</h4><p>Adding a duration-weighted soft-IoU loss to per-timestep BCE: 60.7 → 65.3 mIoU, short clips.</p><a class="src" href="https://arxiv.org/abs/2610.18615">VideoJev, Table 6</a></div></div>
-      <div class="ev"><div class="big">69.2<small>top-1 %</small></div><div><h4>Staged hard negatives and replay</h4><p>Pre-train then hard negatives 69.2, vs 52.1 without and 62.4 with hard negatives from the start. Replay keeps 68.5 vs 56.2.</p><a class="src" href="https://github.com/Contrastive-LM/CLM">CLM README</a></div></div>
-      <div class="ev"><div class="big">= 0<small>accuracy cost</small></div><div><h4>An explicit "none" is free</h4><p>Adding a "None of the above" option left accuracy unchanged (84.66 both ways, 51,506 questions).</p><a class="src" href="https://arxiv.org/abs/2610.17309">StartLux-Decision</a></div></div>
-      <div class="ev"><div class="big">0.23→0.07<small>flip rate</small></div><div><h4>Letter readouts are order-sensitive</h4><p>Averaging over option rotations cuts answer flips under reordering; ECE 0.240 → 0.184.</p><a class="src" href="https://github.com/nokia-applied-research/AnyJev">AnyJev README</a></div></div>
-      <div class="ev"><div class="big">null<small>head details</small></div><div><h4>Head tweaks mostly do nothing</h4><p>Kev's notes list option isolation, head width and permutation-KL as tried without help. Visual Jev's typed head tied the LM head (0.761).</p><a class="src" href="https://github.com/jaredpalmer/kev">Kev PLAN.md</a></div></div>
+      <h3 class="evg">A · Encoding and set interaction · 2</h3>
+      <div class="ev" id="ev-joint"><div class="big ">+18.1<small>MMLU points</small></div><div><h4>Joint beats separate encoding</h4><p>Putting the options into the request lifts MMLU from 56.5 to 74.6. FunDM finds +16–17 MMLU-Pro for joint over option-only encoding.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">MMLU %</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con" style="left:56.45%;width:18.11%"></span><span class="p b" style="left:56.45%"><em class="">56.5</em></span><span class="p a" style="left:74.56%"><em class="lo">74.6</em></span></div></div></div><div class="dbleg">○ options apart · ● options in the request</div><a class="src" href="https://arxiv.org/abs/2610.11316">MetaEncoder, Table 3</a></div></div>
+      <div class="ev" id="ev-set"><div class="big long">+0.4–2.1<small>set layer, accuracy pts</small></div><div><h4>Set interaction adds a little</h4><p>A set-attention layer on top of joint states.<span class="lines2"><span>FunDM, Table 4 · +0.4 / +2.1 mean accuracy</span><span>StartLux · up to +2.4 Decision Index (bidirectional attention in the prompt)</span></span></p><a class="src" href="https://arxiv.org/abs/2610.17175">FunDM, Table 4</a></div></div>
+      <h3 class="evg">B · What to train · 3</h3>
+      <div class="ev" id="ev-backbone"><div class="big ">+6.0<small>Capability, OpenDecisions</small></div><div><h4>The backbone matters more than the head</h4><p>Gemma 4 31B. Training only the head: 78.9. LoRA with the head frozen: 84.9. LoRA ranks 16–128 score about the same.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">Capability</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con" style="left:78.90%;width:6.00%"></span><span class="p b" style="left:78.90%"><em class="">78.9</em></span><span class="p a" style="left:84.90%"><em class="lo">84.9</em></span></div></div></div><div class="dbleg">○ head only · ● LoRA, head frozen</div><a class="src" href="https://arxiv.org/abs/2610.17205">Releasing the Inner Jev, §5.4</a></div></div>
+      <div class="ev" id="ev-softiou"><div class="big ">+4.6<small>mIoU</small></div><div><h4>Soft-IoU for grounding</h4><p>Adding a duration-weighted soft-IoU loss to per-timestep BCE: 60.7 → 65.3 mIoU, short clips.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">mIoU</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con" style="left:60.70%;width:4.60%"></span><span class="p b" style="left:60.70%"><em class="">60.7</em></span><span class="p a" style="left:65.30%"><em class="lo">65.3</em></span></div></div></div><div class="dbleg">○ BCE · ● BCE + soft-IoU · short clips</div><a class="src" href="https://arxiv.org/abs/2610.18615">VideoJev, Table 6</a></div></div>
+      <div class="ev" id="ev-negatives"><div class="big ">69.2<small>top-1 %, staged</small></div><div><h4>Staged hard negatives and replay</h4><p>Pre-train then hard negatives 69.2, vs 52.1 without and 62.4 with hard negatives from the start. Replay keeps 68.5 vs 56.2.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">staging</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con readme" style="left:52.10%;width:17.10%"></span><span class="p b" style="left:52.10%"><em class="">52.1</em></span><span class="p m" style="left:62.40%"><em class="lo">62.4</em></span><span class="p a" style="left:69.20%"><em class="">69.2</em></span></div></div><div class="dbrow"><span class="ml">replay</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">100</span><span class="con readme" style="left:56.20%;width:12.30%"></span><span class="p b" style="left:56.20%"><em class="">56.2</em></span><span class="p a" style="left:68.50%"><em class="lo">68.5</em></span></div></div></div><div class="dbleg">staging: ○ none · ◎ from start · ● staged — replay: ○ without · ● with</div><a class="src" href="https://github.com/Contrastive-LM/CLM">CLM README</a><span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></div></div>
+      <h3 class="evg">C · Head and readout · 3</h3>
+      <div class="ev" id="ev-none"><div class="big word">= 0<small>accuracy cost</small></div><div><h4>An explicit "none" is free</h4><p>Adding a "None of the above" option left accuracy unchanged (84.66 both ways, 51,506 questions).</p><a class="src" href="https://arxiv.org/abs/2610.17309">StartLux-Decision</a></div></div>
+      <div class="ev" id="ev-order"><div class="big ">0.073<small>flip rate, from 0.230</small></div><div><h4>Letter readouts are order-sensitive</h4><p>Averaging over option rotations cuts answer flips under reordering from 0.230 to 0.073; ECE 0.240 → 0.184.</p><div class="db" aria-hidden="true"><div class="dbrow"><span class="ml">flip rate</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">0.30</span><span class="con readme" style="left:24.33%;width:52.33%"></span><span class="p b" style="left:76.67%"><em class="">0.230</em></span><span class="p a" style="left:24.33%"><em class="lo">0.073</em></span></div></div><div class="dbrow"><span class="ml">ECE</span><div class="dbt"><span class="e0"></span><span class="e1"></span><span class="el">0</span><span class="el r">0.30</span><span class="con readme" style="left:61.33%;width:18.67%"></span><span class="p b" style="left:80.00%"><em class="">0.240</em></span><span class="p a" style="left:61.33%"><em class="lo">0.184</em></span></div></div></div><div class="dbleg">○ single order · ● rotation-averaged · lower is better · axis 0–0.30 (truncated), two metrics, not comparable</div><a class="src" href="https://github.com/nokia-applied-research/AnyJev">AnyJev README</a><span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></div></div>
+      <div class="ev" id="ev-head"><div class="big word">null<small>head details</small></div><div><h4>Head tweaks mostly do nothing</h4><p>Kev's notes list option isolation, head width and permutation-KL as tried without help. <a href='https://arxiv.org/abs/2609.25845'>Visual Jev</a>'s typed head tied the LM head (0.761).</p><a class="src" href="https://github.com/jaredpalmer/kev">Kev PLAN.md</a><span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span></div></div>
     </div>
+    <div class="figcap" style="margin-top:18px"><span class="fn">FIG. 3</span><span class="claim">Each plot is one reported comparison on its own metric and its own axis from zero; compare within a card, never across. Point estimates as reported, no intervals drawn. +18.1 and +4.6 are computed from the two values shown; every other big number is quoted from the source.</span><span class="src">Source: the paper table or README linked on each card</span></div>
   </section>
 
   <section class="block" id="rl">
-    <h2>RL for decisions</h2>
+    <h2><span class="n"></span>RL for decisions</h2>
+    <p class="headline">Jev's RLCD is unpublished; here is what is open.</p>
     <p class="intro">What exists for training calibrated decisions with RL. Jev's own RLCD is unpublished.</p>
     <div class="compact">
-      <div class="mini"><a class="t" href="https://github.com/ZimmyGao/openjev-rlcd">OpenJev-RLCD</a><p>Proper-score reward on the committed answer distribution, leave-one-out baselines, KL anchor; estimators tested for unbiasedness. Text only.</p></div>
-      <div class="mini"><a class="t" href="https://arxiv.org/abs/2610.17309">RLCD² (StartLux)</a><p>Rewards the improvement in probability quality after reasoning, minus a length penalty. Code not released.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/NandhaKishorM/laya">Laya "RLCD"</a><p>Noise-perturbed logits rewarded by proper scores plus soft CE: a regulariser around a fixed target, not RL against an environment.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/TianyuCodings/NanoJev">NanoJev</a><p>Paired proper-score policy gradient with exact gradient checks; its own study finds it no better than direct CE or Brier.</p></div>
-      <div class="mini"><a class="t" href="https://github.com/Mapika/decider">Decider</a><p>PPO with a log-score belief reward, documented in docs/RL.md; the training code is not in the repo.</p></div>
-      <div class="mini"><span class="t">General calibration RL</span><p><a href="https://arxiv.org/abs/2507.16806">RLCR</a> (Brier reward), <a href="https://arxiv.org/abs/2503.02623">Rewarding Doubt</a> (log score). Not decision models.</p></div>
+      <div class="mini" id="rl-openjev"><a class="t" href="https://github.com/ZimmyGao/openjev-rlcd">OpenJev-RLCD</a><p>Proper-score reward on the committed answer distribution, leave-one-out baselines, KL anchor; estimators tested for unbiasedness. Text only.</p><div class="meta"><span class="st ok">code</span><span class="kind">RL · text only</span> <a class="xref" href="#p-openjev-rlcd">paper</a></div></div>
+      <div class="mini" id="rl-rlcd2"><a class="t" href="https://arxiv.org/abs/2610.17309">RLCD² (StartLux)</a><p>Rewards the improvement in probability quality after reasoning, minus a length penalty. RL training code not released.</p><div class="meta"><span class="st warn">RL code not released</span><span class="kind">RL</span> <a class="xref" href="#a-startlux">audit ↗</a></div></div>
+      <div class="mini" id="rl-laya"><a class="t" href="https://github.com/NandhaKishorM/laya">Laya "RLCD"</a><p>Noise-perturbed logits rewarded by proper scores plus soft CE: a regulariser around a fixed target, not RL against an environment.</p><div class="meta"><span class="st neu">in repo</span><span class="kind">regulariser</span> <a class="xref" href="#a-laya">audit ↗</a></div></div>
+      <div class="mini" id="rl-nanojev"><a class="t" href="https://github.com/TianyuCodings/NanoJev">NanoJev</a><p>Paired proper-score policy gradient with exact gradient checks; its own study finds it no better than direct CE or Brier<span class="self" title="self-reported: from a README, model card or notes, not a paper table"><span class="vh">(self-reported)</span></span>.</p><div class="meta"><span class="st neu">in repo</span><span class="kind">RL</span> <a class="xref" href="#a-nanojev">audit ↗</a></div></div>
+      <div class="mini" id="rl-decider"><a class="t" href="https://github.com/Mapika/decider">Decider</a><p>PPO with a log-score belief reward, documented in docs/RL.md; the training code is not in the repo.</p><div class="meta"><span class="st warn">docs only</span><span class="kind">PPO</span> <a class="xref" href="#a-decider">audit ↗</a></div></div>
+      <div class="mini" id="rl-general"><span class="t">General calibration RL</span><p><a href="https://arxiv.org/abs/2507.16806">RLCR</a> (Brier reward), <a href="https://arxiv.org/abs/2503.02623">Rewarding Doubt</a> (log score). Not decision models.</p><div class="meta"><span class="kind">not decision models</span></div></div>
     </div>
   </section>
 
@@ -494,8 +746,10 @@ footer.site .container { display: flex; justify-content: space-between; flex-wra
 
 <footer class="site">
   <div class="container">
-    <span>Jev field guide · compiled 15–16 Oct 2026</span>
-    <span>Numbers as reported by each source; stars as of 15 Oct 2026</span>
+    <div class="grule"></div>
+    <span>Jev field guide · compiled 15–16 Oct 2026 · <a href="https://ekazakos.github.io/">Vangelis Kazakos ↗</a> · <a href="#top">↑ top</a></span>
+    <span>Numbers as reported by each source; stars as of 15 Oct 2026 · boards 16 Oct (jev-bench chart 2 Oct) · arXiv search 19 Sep – 14 Oct</span>
+    <span><span class="self"></span> marks scores, rankings and measured effects taken from a README, model card, notes or self-report rather than a paper table.</span>
   </div>
 </footer>
 
@@ -503,17 +757,33 @@ footer.site .container { display: flex; justify-content: space-between; flex-wra
 (function () {
   var bar = document.getElementById('progress');
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var nav = document.querySelector('.nav');
   var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
-  function onScroll() {
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-    var cur = -1;
-    secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < 120) cur = i; });
-    links.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+  var ticking = false, lock = 0;
+  function stickyTop() { var t = document.querySelector('.topbar'); return t ? t.getBoundingClientRect().bottom : 60; }
+  function update() {
+    ticking = false;
+    var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+    if (bar) bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    if (Date.now() < lock) return;
+    var cur = -1, top = stickyTop() + 16;
+    secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top <= top) cur = i; });
+    if (max > 0 && h.scrollTop >= max - 2) cur = links.length - 1;
+    setActive(cur);
   }
+  function setActive(cur) {
+    links.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    if (cur >= 0 && nav && nav.scrollWidth > nav.clientWidth) {
+      var a = links[cur], x = a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2;
+      nav.scrollLeft = Math.max(0, Math.min(x, nav.scrollWidth - nav.clientWidth));
+    }
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  links.forEach(function (a, i) { a.addEventListener('click', function () { lock = Date.now() + 700; setActive(i); }); });
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  window.addEventListener('resize', onScroll);
+  window.addEventListener('hashchange', onScroll);
+  update();
 })();
 </script>
 
