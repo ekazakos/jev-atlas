@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Jev Atlas</title>
 <meta name="description" content="An atlas of Jev-style decision models (October 2026): text and vision papers, open models, leaderboards, a code audit of 27 implementations, and the evidence on head design.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="canonical" href="https://ekazakos.github.io/jev-atlas/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jev Atlas">
@@ -14,7 +16,7 @@
 <meta property="og:image" content="https://ekazakos.github.io/jev-atlas/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Jev Atlas: a decision card showing Billing chosen with probability 0.91">
+<meta property="og:image:alt" content="Jev Atlas logo: a probability distribution whose tallest bar is the chosen option">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jev Atlas">
 <meta name="twitter:description" content="Papers, open models, leaderboards and a code audit of 27 implementations of Jev-style decision models (October 2026).">
@@ -408,6 +410,15 @@ h3.evg:first-child { margin-top: 0; }
 .box .bars i { width: 5px; border-radius: 999px; background: var(--ink-faint); display: block; }
 .box .bars i.w { background: var(--gradient); }
 
+/* logo mark in the brand */
+.brand { display: inline-flex; align-items: center; gap: 9px; }
+.mark { width: 24px; height: 24px; flex: none; }
+.mark rect { fill: #8a8db0; }
+.mark rect.w { fill: url(#markbar); }
+.mark .g0 { stop-color: #4f46e5; } .mark .g1 { stop-color: #ec4899; } .mark .g2 { stop-color: #f59e0b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mark .g0 { stop-color: #a5b4fc; } :root:not([data-theme="light"]) .mark .g1 { stop-color: #f9a8d4; } :root:not([data-theme="light"]) .mark .g2 { stop-color: #fcd34d; } }
+:root[data-theme="dark"] .mark .g0 { stop-color: #a5b4fc; } :root[data-theme="dark"] .mark .g1 { stop-color: #f9a8d4; } :root[data-theme="dark"] .mark .g2 { stop-color: #fcd34d; }
+
 /* footer */
 footer.site .container { flex-direction: column; gap: 5px; font-family: var(--font-mono); font-size: 11px; }
 footer.site .grule { height: 3px; border-radius: 2px; background: var(--gradient); margin-bottom: 14px; }
@@ -424,7 +435,7 @@ footer.site a { color: var(--ink-muted); border: none; }
 
 <header class="topbar">
   <div class="container topbar-inner">
-    <a class="brand" href="#top">Jev <i>atlas</i></a>
+    <a class="brand" href="#top"><svg class="mark" viewBox="24 40 464 464" aria-hidden="true"><defs><linearGradient id="markbar" gradientUnits="userSpaceOnUse" x1="256" y1="436" x2="256" y2="76"><stop offset="0" class="g0"/><stop offset="0.55" class="g1"/><stop offset="1" class="g2"/></linearGradient></defs><rect x="48" y="348" width="64" height="88" rx="14"/><rect x="136" y="288" width="64" height="148" rx="14"/><rect x="312" y="316" width="64" height="120" rx="14"/><rect x="400" y="372" width="64" height="64" rx="14"/><rect class="w" x="224" y="76" width="64" height="360" rx="14"/><rect x="36" y="452" width="440" height="8" rx="4"/></svg>Jev <i>atlas</i></a>
     <nav class="nav" aria-label="Sections"><a href="#jev">Jev</a><span class="nav-sep" aria-hidden="true"></span><a href="#text">Text</a><a href="#vision">Vision</a><span class="nav-sep" aria-hidden="true"></span><a href="#models">Models</a><a href="#boards">Boards</a><a href="#hubs">Browse</a><span class="nav-sep" aria-hidden="true"></span><a href="#audit">Audit</a><a href="#evidence">Evidence</a><a href="#rl">RL</a></nav>
   </div>
 </header>
